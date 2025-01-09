@@ -56,20 +56,24 @@ export const CartHandel = (event, id) => {
       product : product,
     };
     
-    fetch("https://snapbuy-backend.onrender.com/product/cart/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
-    .then((res) => {
-        if (res.ok) {
-            toast.success("Added to cart.");
-        }
-        else{
-            toast.error("Failed to add to cart.");
-        }
-    })
-    .catch((error) => console.log(error));
+    if (user_id) {
+        fetch("https://snapbuy-backend.onrender.com/product/cart/", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            })
+              .then((res) => {
+                if (res.ok) {
+                  toast.success("Added to cart.");
+                } else {
+                  toast.error("Failed to add to cart.");
+                }
+              })
+              .catch((error) => console.log(error));
+    }
+    else{
+        window.location.href ='/login'
+    }
 }
 
 export const HandalCheckout = (event, total, cartItem) =>{

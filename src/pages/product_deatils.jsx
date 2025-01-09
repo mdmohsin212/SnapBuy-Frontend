@@ -11,6 +11,8 @@ const ProductInfo = () => {
     const id = useParams().id;
     const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(true);
+    const user_id = localStorage.getItem("user_id");
+    let authecat = user_id ? true : false;
 
     useEffect(() => {
         fetch(`https://snapbuy-backend.onrender.com/product/list/${id}`)
@@ -54,9 +56,15 @@ const ProductInfo = () => {
                 >
                   Add to Cart
                 </button>
-                <Link to="/cart" className="btn btn-dark mx-3">
-                  Go to Cart
-                </Link>
+                {authecat ? (
+                  <Link to="/cart" className="btn btn-dark mx-3">
+                    Go to Cart
+                  </Link>
+                ) : (
+                  <Link to="/login" className="btn btn-dark mx-3">
+                    Go to Cart
+                  </Link>
+                )}
               </div>
             </div>
           </div>
