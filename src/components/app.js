@@ -76,6 +76,16 @@ export const CartHandel = (event, id) => {
     }
 }
 
+export const uniqueTransaction = (size = 10) => {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let result = "";
+  for (let i = 0; i < size; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+};
+
+
 export const HandalCheckout = (event, total, cartItem) =>{
         event.preventDefault();
     const name = getData("Name");
@@ -90,10 +100,11 @@ export const HandalCheckout = (event, total, cartItem) =>{
       email: email,
       address: address,
       zip: zip,
-      Order : false,
+      Order: false,
       total_amount: amount,
       user: user_id,
       cart: cartItem,
+      tran_id : uniqueTransaction(),
     };
     
     if (name && email && address && zip) {
@@ -102,9 +113,8 @@ export const HandalCheckout = (event, total, cartItem) =>{
           headers: { "content-type": "application/json" },
           body: JSON.stringify(info),
         })
-        .then((res) => res.json())
-        .catch((error) => console.error(error));
-        // console.log(info);
+          .then((res) => res.json())
+          .catch((error) => console.error(error));
     }
     else{
         toast.error("Fill all the field for checkout.")

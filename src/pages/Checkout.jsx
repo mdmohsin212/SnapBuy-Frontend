@@ -3,11 +3,13 @@ import Footer from "./Footer";
 import { HandalCheckout } from "../components/app";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const user_id = localStorage.getItem("user_id");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(
@@ -25,13 +27,20 @@ const Checkout = () => {
   }, [user_id]);
 
   let total = 0;
-  let shipping = 50.00;
+  let shipping = 50.0;
   let totalItems = 0;
 
   cartItems.forEach((item) => {
     total += item.product_price * item.quantity;
     totalItems += item.quantity;
   });
+
+const handlPayment = (event) => {
+  event.preventDefault();
+  const cartItemIds = cartItems.map((item) => item.id);
+  HandalCheckout(event, total, cartItemIds);
+  navigate("/make_payment");
+};
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -132,12 +141,9 @@ const Checkout = () => {
                     </div>
                     <hr className="my-4" />
                     <button
+                      type="button"
                       className="w-100 btn btn-primary"
-                      type="submit"
-                      onClick={(e) => {
-                        const cartItemIds = cartItems.map((item) => item.id);
-                        HandalCheckout(e, total, cartItemIds);
-                      }}
+                      onClick={handlPayment}
                     >
                       Continue to checkout
                     </button>
