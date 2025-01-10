@@ -32,7 +32,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <h1 className="text-center p-3 fw-light">Latest Products</h1> <hr className="w-75 m-auto"/>
+      <h1 className="text-center p-3 fw-light">Latest Products</h1>{" "}
+      <hr className="w-75 m-auto" />
       <Product />
     </>
   );

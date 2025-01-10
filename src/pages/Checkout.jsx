@@ -62,17 +62,28 @@ const handlPayment = (event) => {
                 <div className="card-body">
                   <ul className="list-group list-group-flush">
                     <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                      Products ({totalItems})<span>${total.toFixed(2)}</span>
+                      Products ({totalItems})
+                      <span>
+                        <span className="fs-4">৳ </span>
+                        {total.toFixed(2)}
+                      </span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between align-items-center px-0">
-                      Shipping<span>${shipping}</span>
+                      Shipping
+                      <span>
+                        <span className="fs-4">৳ </span>
+                        {shipping}
+                      </span>
                     </li>
                     <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                       <div>
                         <strong>Total amount</strong>
                       </div>
                       <span>
-                        <strong>${(total + shipping).toFixed(2)}</strong>
+                        <strong>
+                          <span className="fs-4">৳ </span>
+                          {(total + shipping).toFixed(2)}
+                        </strong>
                       </span>
                     </li>
                   </ul>

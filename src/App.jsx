@@ -15,6 +15,7 @@ import Cart from "./pages/Cart";
 import ProductInfo from "./pages/product_deatils";
 import Checkout from "./pages/Checkout";
 import MakePayment from './pages/Make_payment';
+import BuyInfo from './pages/Buy_info';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/product_details/:id" element={<ProductInfo />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/make_payment" element={<MakePayment />} />
+        <Route path="/buy_info/:id" element={<BuyInfo />} />
       </Routes>
     </>
   );

@@ -11,7 +11,6 @@ export const payment = () => {
   )
     .then((res) => res.json())
     .then((data) => {
-      console.log("Success:", data);
       window.location.href = data.payment_url;
     })
     .catch((error) => console.error("Error:", error));
