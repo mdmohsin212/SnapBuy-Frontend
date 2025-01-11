@@ -85,97 +85,61 @@ export const uniqueTransaction = (size = 10) => {
   return result;
 };
 
+export const HandalCheckout = (event, total, cartItem) => {
+      event.preventDefault();
+      const name = getData("Name");
+      const email = getData("email");
+      const address = getData("address");
+      const zip = getData("zip");
+      const user_id = localStorage.getItem("user_id");
+      const amount = parseFloat(total.toFixed(2)) + 50.00;
+      console.log(amount);
 
-export const HandalCheckout = (event, total, cartItem) =>{
-        event.preventDefault();
-    const name = getData("Name");
-    const email = getData("email");
-    const address = getData("address");
-    const zip = getData("zip");
-    const user_id = localStorage.getItem("user_id");
-    const amount = total.toFixed(2);
+      const info = {
+        name: name,
+        email: email,
+        address: address,
+        zip: zip,
+        Order: false,
+        total_amount: amount,
+        user: user_id,
+        cart: cartItem,
+        tran_id : uniqueTransaction(),
+      };
 
-    const info = {
-      name: name,
-      email: email,
-      address: address,
-      zip: zip,
-      Order: false,
-      total_amount: amount,
-      user: user_id,
-      cart: cartItem,
-      tran_id : uniqueTransaction(),
-    };
-    
-    if (name && email && address && zip) {
-        fetch("https://snapbuy-backend.onrender.com/payment/checkout/", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify(info),
-        })
-          .then((res) => res.json())
-          .catch((error) => console.error(error));
-    }
-    else{
-        toast.error("Fill all the field for checkout.")
-    }
-}
-
-
-// export const HandalCheckout = (event, total, cartItem) => {
-//       event.preventDefault();
-//       const name = getData("Name");
-//       const email = getData("email");
-//       const address = getData("address");
-//       const zip = getData("zip");
-//       const user_id = localStorage.getItem("user_id");
-//       const amount = total.toFixed(2);
-
-//       const info = {
-//         name: name,
-//         email: email,
-//         address: address,
-//         zip: zip,
-//         Order: false,
-//         total_amount: amount,
-//         user: user_id,
-//         cart: cartItem,
-//         tran_id : uniqueTransaction(),
-//       };
-
-//   fetch(`http://127.0.0.1:8000/payment/status/${user_id}/`)
-//     .then((res) => res.json())
-//     .then((data) => {
-//       if (data.status == "YES") {
-//             if (name && email && address && zip) {
-//                 fetch(`http://127.0.0.1:8000/payment/checkout/?user_id=${user_id}`, {
-//                   method: "PUT",
-//                   headers: { "content-type": "application/json" },
-//                   body: JSON.stringify(info),
-//                 })
-//                   .then((res) => res.json())
-//                   .catch((error) => console.error(error));
-//                   console.log(1);
-//             }
-//             else{
-//                 toast.error("Fill all the field for checkout.")
-//             }
-//       } else {
-//             if (name && email && address && zip) {
-//                 fetch("http://127.0.0.1:8000/payment/checkout/", {
-//                   method: "POST",
-//                   headers: { "content-type": "application/json" },
-//                   body: JSON.stringify(info),
-//                 })
-//                   .then((res) => res.json())
-//                   .catch((error) => console.error(error));
-//             }
-//             else{
-//                 toast.error("Fill all the field for checkout.")
-//             }
-//       }
-//     });
-// };
+  fetch(`https://snapbuy-backend.onrender.com/payment/status/${user_id}/`)
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.status == "YES") {
+        if (name && email && address && zip) {
+          fetch(
+            `https://snapbuy-backend.onrender.com/payment/checkout/${data.id}/`,
+            {
+              method: "PATCH",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify(info),
+            }
+          )
+            .then((res) => res.json())
+            .catch((error) => console.error(error));
+        } else {
+          toast.error("Fill all the field for checkout.");
+        }
+      } else {
+        if (name && email && address && zip) {
+          fetch("https://snapbuy-backend.onrender.com/payment/checkout/", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(info),
+          })
+            .then((res) => res.json())
+            .catch((error) => console.error(error));
+        } else {
+          toast.error("Fill all the field for checkout.");
+        }
+      }
+    });
+};
 
 export const getData = (id) => {
   const data = document.getElementById(id).value;
