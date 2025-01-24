@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,9 +19,9 @@ const Nav = () => {
   }
 
   return (
-    <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light py-2 sticky-top">
-        <div className="container">
+    <div>
+      <nav className="navbar navbar-expand-lg navbar-light bg-light py-2 sticky-top p-5">
+        <div className="container-fluid d-flex justify-content-between w-100">
           <NavLink className="navbar-brand fw-bold fs-3" to="/">
             SnapBuy
           </NavLink>
@@ -61,21 +61,72 @@ const Nav = () => {
             </ul>
             <div className="text-center">
               {isAuthenticated ? (
-                <>
-                  <NavLink to="/cart" className="btn btn-outline-dark m-2">
-                    <FontAwesomeIcon icon={faCartShopping} /> Cart
-                  </NavLink>
-                  <NavLink to="/profile" className="btn btn-outline-dark m-2">
-                    <FontAwesomeIcon icon={faUser} /> Profile
-                  </NavLink>
-                  <NavLink
-                    to="/signup"
-                    className="btn btn-outline-dark m-2"
-                    onClick={() => UserLogout()}
-                  >
-                    <FontAwesomeIcon icon={faRightToBracket} /> Logout
-                  </NavLink>
-                </>
+                <div className="d-flex align-items-center gap-3 justify-content-center justify-content-sm-start">
+                  <div className="nav-item dropdown">
+                    <NavLink
+                      className="nav-link dropdown-toggle"
+                      to="#"
+                      id="accountDropdown"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <FontAwesomeIcon icon={faUser} className="me-2" />
+                    </NavLink>
+                    Account
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby="accountDropdown"
+                    >
+                      <li>
+                        <NavLink className="dropdown-item" to="/profile">
+                          <FontAwesomeIcon icon={faUser} className="me-2" />
+                          Profile
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink className="dropdown-item" to="/orders">
+                          <FontAwesomeIcon
+                            icon={faCartShopping}
+                            className="me-2"
+                          />
+                          Orders
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          className="dropdown-item"
+                          to="/signup"
+                          onClick={() => UserLogout()}
+                        >
+                          <FontAwesomeIcon
+                            icon={faRightToBracket}
+                            className="me-2"
+                          />
+                          Logout
+                        </NavLink>
+                      </li>
+                    </ul>
+                    <style>
+                      {`
+                  .dropdown-toggle::after {
+                    display: none;
+                  }
+                `}
+                    </style>
+                  </div>
+                  <div>
+                    <NavLink to="/cart" className="nav-link">
+                      <FontAwesomeIcon icon={faCartShopping} />
+                    </NavLink>
+                    <NavLink
+                      to="/cart"
+                      className="text-decoration-none text-dark"
+                    >
+                      Cart
+                    </NavLink>
+                  </div>
+                </div>
               ) : (
                 <>
                   <NavLink to="/login" className="btn btn-outline-dark m-2">
@@ -84,13 +135,13 @@ const Nav = () => {
                   <NavLink to="/signup" className="btn btn-outline-dark m-2">
                     <FontAwesomeIcon icon={faUserPlus} /> Register
                   </NavLink>
-                </>
+                </> 
               )}
             </div>
           </div>
         </div>
       </nav>
-    </>
+    </div>
   );
 };
 

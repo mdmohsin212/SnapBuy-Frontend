@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Checkout from './../pages/Checkout';
+const user_id = localStorage.getItem("user_id");
 
 export const ContactHandel = (event) => {
     event.preventDefault();
@@ -140,6 +140,41 @@ export const HandalCheckout = (event, total, cartItem) => {
       }
     });
 };
+
+export const PasswordChangeHandel = (event) => {
+  event.preventDefault();
+  const old_password = getData("previousPassword");
+  const new_password = getData("Password");
+  const new_password2 = getData("password2");
+  
+  if (new_password != new_password2) {
+    toast.error("New passwords do not match");
+    return;
+  }
+  const data = {
+    old_password,
+    new_password,
+  };
+
+  fetch(
+    `https://snapbuy-backend.onrender.com/user/change_password/${user_id}/`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.error) {
+        toast.error(data.error);
+      } else {
+        toast.success(data.message);
+      }
+    });
+}
 
 export const getData = (id) => {
   const data = document.getElementById(id).value;

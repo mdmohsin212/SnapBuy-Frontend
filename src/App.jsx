@@ -15,7 +15,11 @@ import Cart from "./pages/Cart";
 import ProductInfo from "./pages/product_deatils";
 import Checkout from "./pages/Checkout";
 import MakePayment from './pages/Make_payment';
-import BuyInfo from './pages/Buy_info';
+import Order from './components/Order'; 
+import ChangePassword from './components/Change_password';
+import Reviews from './components/Reviews';
+import OrderDeatils from "./components/Order_deatils";
+
 
 function App() {
   return (
@@ -32,8 +36,11 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/product_details/:id" element={<ProductInfo />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/orders" element={<Order />} />
+        <Route path="/reviews" element={<Reviews />} />
+        <Route path="/order_deatils/:id" element={<OrderDeatils />} />
         <Route path="/make_payment" element={<MakePayment />} />
-        <Route path="/buy_info/:id" element={<BuyInfo />} />
+        <Route path="/change_password" element={<ChangePassword />} />
       </Routes>
     </>
   );

@@ -1,6 +1,4 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { Link } from "react-router-dom";
 import Product from './Product';
 
@@ -10,9 +8,8 @@ const Home = () => {
       <div className="hero border-1 pb-3">
         <div className="card bg-dark text-white border-0 mx-3">
           <img
-            className="card-img img-fluid"
+            className="card-img img-fluid h-100"
             src="./images/main.png"
-            height={500}
             alt="SnapBuy Hero Banner"
           />
           <div className="card-img-overlay d-flex align-items-center">

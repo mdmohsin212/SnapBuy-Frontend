@@ -184,7 +184,6 @@ const Cart = () => {
                     </ul>
                     <Link
                       to="/checkout"
-                      state={{ cartItems, total, totalItems, shipping }}
                       className="btn btn-dark btn-lg btn-block"
                     >
                       Go to checkout
