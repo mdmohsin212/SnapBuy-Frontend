@@ -1,5 +1,18 @@
-.nav-link:hover {
-  background-color: #f1f1f1; 
-  font-weight: bold;
-  padding-left: 10px;
+.profile-nav {
+  width: 230px;
+}
+
+.profile-nav-link {
+  color: black;
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  font-size: 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.profile-nav-link:hover {
+  background-color: #d7d5d5d2;
 }

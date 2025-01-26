@@ -176,6 +176,42 @@ export const PasswordChangeHandel = (event) => {
     });
 }
 
+export const ReviewHandel = (event, product) => {
+  event.preventDefault();
+  const star = getData("selected-rating");
+  const name = getData("name");
+  const email = getData("email");
+  const body = getData("review");
+
+ const data = {
+    name: name,
+    email: email,
+    star : star,
+    body : body,
+    user : user_id,
+    product : product,
+  }
+  console.log(data);
+  fetch(`https://snapbuy-backend.onrender.com/product/review/`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(data),
+  })
+  .then((res) => {
+    if (res.ok) {
+      toast.success("Your review has been successfully submitted.");
+      setTimeout(() => {
+        window.location.href = "/orders";
+      }, 1500);
+    }
+    else{
+      toast.error("something error");
+    }
+    return res.json()
+  })
+  .then((data) => console.log(data))
+}
+
 export const getData = (id) => {
   const data = document.getElementById(id).value;
   return data;
