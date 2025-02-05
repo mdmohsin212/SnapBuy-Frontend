@@ -20,7 +20,7 @@ const Nav = () => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light py-2 sticky-top p-5">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light py-2 sticky-top p-5 shadow">
         <div className="container-fluid d-flex justify-content-between w-100">
           <NavLink className="navbar-brand fw-bold fs-3" to="/">
             SnapBuy

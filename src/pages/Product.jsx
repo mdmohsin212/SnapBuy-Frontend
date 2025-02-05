@@ -1,41 +1,56 @@
 import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
-import { Link } from "react-router-dom";
-import { CartHandel } from "../components/app";
+import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Product = () => {
-  const [product, setProduct] = useState([]);
+  const [allProduct, setProduct] = useState([]);
   const [filter, setFilter] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     fetch("https://snapbuy-backend.onrender.com/product/list/")
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);
-        setFilter(data);
+        setFilter(location.pathname === "/" ? data.slice(0, 9) : data);
         setLoading(false);
       })
       .catch((error) => {
         setLoading(false);
         console.error(error);
       });
-  }, []);
+  }, [location.pathname]);
 
   const ProductFilter = (category) => {
     if (category === "all") {
-      setFilter(product);
-    } 
-    else {
-      const filteredItems = product.filter((item) =>
-        item.category_name.some(
-          (cat) => cat === category
-        )
+      setFilter(
+        location.pathname === "/" ? allProduct.slice(0, 9) : allProduct
       );
-      setFilter(filteredItems);
-    }
+    } else {
+      const filteredItems = allProduct.filter((item) =>
+        item.category_name.some((cat) => cat === category)
+      );
+      setFilter(
+        location.pathname === "/" ? filteredItems.slice(0, 9) : filteredItems
+      );
+    } 
+  };
+
+  const renderStars = (rating) => {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+    return (
+      <span style={{ color: "#2a50ef", fontSize: "1.35rem" }}>
+        {"★".repeat(fullStars)}
+        {hasHalfStar ? "⯪" : ""}
+        {"☆".repeat(emptyStars)}
+      </span>
+    );
   };
 
   return (
@@ -73,6 +88,7 @@ const Product = () => {
           Electronics
         </button>
       </div>
+
       <div className="container">
         {loading ? (
           <div className="d-flex justify-content-center py-5">
@@ -86,8 +102,9 @@ const Product = () => {
               <div
                 key={product.id}
                 className="col-lg-4 col-md-6 col-sm-12 mb-4"
+                onClick={() => navigate(`/product_details/${product.id}`)}
               >
-                <div className="card text-center h-100">
+                <div className="card text-center h-100 bord">
                   <img
                     className="card-img-top p-3"
                     src={product.img}
@@ -95,42 +112,39 @@ const Product = () => {
                     height={300}
                   />
                   <div className="card-body">
-                    <h5 className="card-title">
+                    <h4 className="card-title">
                       {product.title.substring(0, 12)}...
-                    </h5>
-                    <p className="card-text">
-                      {product.description.substring(0, 90)}...
-                    </p>
-                  </div>
-                  <ul className="list-group list-group-flush">
-                    <li className="list-group-item lead">
-                      {" "}
+                    </h4>
+                    <div className="mb-2">
+                      {renderStars(parseFloat(product.get_rating))}
+                    </div>
+                    <span
+                      className="fw-bold"
+                      style={{ color: "#2a50ef", fontSize: "1.2rem" }}
+                    >
                       <span className="fs-4">৳ </span> {product.price}
-                    </li>
-                  </ul>
-                  <div className="card-body">
-                    <Link
-                      to={`/product_details/${product.id}`}
-                      className="btn btn-dark m-1"
-                    >
-                      Buy Now
-                    </Link>
-                    <button
-                      className="btn btn-dark m-1"
-                      onClick={(e) => CartHandel(e, product.id)}
-                    >
-                      Add to Cart
-                    </button>
+                    </span>
                   </div>
                 </div>
               </div>
             ))}
+            {location.pathname === "/" && (
+              <div className="mb-5 mt-0 text-center">
+                <NavLink
+                  className="btn-lg px-4 text-decoration-none rounded-pill shadow p-1 text-white"
+                  to="/product"
+                  style={{ backgroundColor: "#2a50ef" }}
+                >
+                  See More
+                </NavLink>
+              </div>
+            )}
           </div>
         ) : (
           <h3 className="text-center p-5 mt-5">No products found.</h3>
         )}
       </div>
-      <Footer />
+      {location.pathname !== "/" && <Footer />}
     </div>
   );
 };

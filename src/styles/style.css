@@ -16,3 +16,53 @@
 .profile-nav-link:hover {
   background-color: #d7d5d5d2;
 }
+
+.custom-img {
+  height: 200px;
+}
+
+@media (min-width: 768px) {
+  .custom-img {
+    height: 740px;
+  }
+}
+
+.bord{
+  border: 1px solid white;
+  border-radius: 20px;
+}
+
+.offer {
+  transition: all 0.3s ease-in-out;
+}
+
+.offer:hover {
+  transform: scale(1.05);
+}
+
+.custom-gap-md{
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .custom-gap-md {
+    gap: 100px;
+  }
+}
+
+.logo{
+  width: 80px;
+}
+
+.logo-gap{
+    gap: 5px;
+  }
+
+@media (min-width : 768px) {
+  .logo{
+    width: 90px;
+  }
+  .logo-gap{
+    gap: 50px;
+  }
+}
