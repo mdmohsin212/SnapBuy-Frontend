@@ -59,7 +59,7 @@ const Contact = () => {
           </div>
           <div className="col-md-6 d-none d-md-flex align-items-center justify-content-center">
             <img
-              src="images/con.svg"
+              src="images/contact.png"
               className="img-fluid rounded-3 w-75"
               alt="Contact illustration"
             />
