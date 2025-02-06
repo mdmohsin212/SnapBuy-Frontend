@@ -1,66 +1,65 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Product from './Product';
 import Footer from "./Footer";
 
 const Home = () => {
   return (
     <>
-      <div className="hero border-1 pb-3">
-        <div className="card bg-dark text-white border-0 mx-1">
+      <div className="d-flex justify-content-around flex-wrap px-5">
+        <div className="d-flex justify-content-center align-items-center col-12 col-md-6 order-1 order-md-2">
           <img
-            className="w-100 img-fluid custom-img"
-            src="./images/main.png"
+            className="img-fluid custom-img"
+            src="./images/home2.jpg"
             alt="SnapBuy Hero Banner"
           />
-          <div className="card-img-overlay d-flex align-items-center">
-            <div className="container text-start">
-              <h5 className="card-title fs-1 text fw-lighter">
-                Discover the Latest Trends
-              </h5>
-              <p className="card-text fs-5 d-sm-block d-none">
-                Explore our new season collection and elevate your style with
-                exclusive deals on high-quality products. Your journey to
-                effortless shopping begins here.
-              </p>
-              <p className="d-md-none d-md-none">
-                Explore our new season collection and elevate your style.
-              </p>
-              <Link to={"/product"} className="btn btn-outline-light">
-                See Product
-              </Link>
-            </div>
+        </div>
+        <div className="col-12 col-md-6 order-2 order-md-1 text-start d-flex justify-content-center align-items-center hero-text">
+          <div>
+            <h5 className="fs-1 text fw-lighter">Discover the Latest Trends</h5>
+            <p className="fs-5 d-sm-block d-none">
+              Explore our new season collection and elevate your style with
+              exclusive deals on high-quality products. Your journey to
+              effortless shopping begins here.
+            </p>
+            <p className="d-md-none">
+              Explore our new season collection and elevate your style.
+            </p>
+            <NavLink to={"/product"} className="btn btn-primary">
+              See Product
+            </NavLink>
           </div>
         </div>
       </div>
+
       <div
-        className="d-flex justify-content-center text-center py-5 custom-gap-md p-2 flex-column flex-sm-row"
+        className="d-flex justify-content-center text-center py-5 custom-gap-md flex-column flex-sm-row"
         style={{
           flexWrap: "wrap",
         }}
       >
         <div className="offer">
-          <img src="../images/icon5.svg" alt="" />
+          <img src="../images/icon5.svg" className="pb-2" alt="" />
           <h5>Free Shipping</h5>
           <p>For all orders over $200</p>
         </div>
         <div className="offer">
-          <img src="../images/icon4.svg" alt="" />
+          <img src="../images/icon4.svg" className="pb-2" alt="" />
           <h5>Daily Promotions</h5>
           <p>Discount up to 70%</p>
         </div>
         <div className="offer">
-          <img src="../images/icon3.svg" alt="" />
+          <img src="../images/icon3.svg" className="pb-2" alt="" />
           <h5>Free returns</h5>
           <p>Return for up to 7 days</p>
         </div>
         <div className="offer">
-          <img src="../images/icon4.svg" alt="" />
+          <img src="../images/icon4.svg" className="pb-2" alt="" />
           <h5>Secure payments</h5>
           <p>Security guarantee</p>
         </div>
         <div className="offer">
-          <img src="../images/icon5.svg" alt="" />
+          <img src="../images/icon5.svg" className="pb-2" alt="" />
           <h5>Gifts for members</h5>
           <p>Bonuses for members</p>
         </div>
@@ -73,11 +72,31 @@ const Home = () => {
         <h4 className="pb-3">Exclusive brands in our store</h4>
         <hr className="w-75 m-auto pt-3" />
         <div className="d-flex justify-content-center align-items-center flex-wrap flex-column flex-md-row logo-gap">
-          <img src="../images/logo-1.svg" className="img-fluid logo offer" alt="" />
-          <img src="../images/logo-2.svg" className="img-fluid logo offer" alt="" />
-          <img src="../images/logo-3.svg" className="img-fluid logo offer" alt="" />
-          <img src="../images/logo-4.svg" className="img-fluid logo offer" alt="" />
-          <img src="../images/logo-5.svg" className="img-fluid logo offer" alt="" />
+          <img
+            src="../images/logo-1.svg"
+            className="img-fluid logo offer"
+            alt=""
+          />
+          <img
+            src="../images/logo-2.svg"
+            className="img-fluid logo offer"
+            alt=""
+          />
+          <img
+            src="../images/logo-3.svg"
+            className="img-fluid logo offer"
+            alt=""
+          />
+          <img
+            src="../images/logo-4.svg"
+            className="img-fluid logo offer"
+            alt=""
+          />
+          <img
+            src="../images/logo-5.svg"
+            className="img-fluid logo offer"
+            alt=""
+          />
         </div>
       </div>
 

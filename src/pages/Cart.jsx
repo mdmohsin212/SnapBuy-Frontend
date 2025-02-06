@@ -184,7 +184,7 @@ const Cart = () => {
                     </ul>
                     <Link
                       to="/checkout"
-                      className="btn btn-dark btn-lg btn-block"
+                      className="btn btn-primary btn-lg btn-block"
                     >
                       Go to checkout
                     </Link>
@@ -202,7 +202,6 @@ const Cart = () => {
     <div className="d-flex flex-column min-vh-100">
       <div className="container my-3 py-3">
         <h1 className="text-center">Cart</h1>
-        <hr />
         {loading ? (
           <div className="d-flex justify-content-center py-5">
             <div className="spinner-border text-dark" role="status">

@@ -18,13 +18,7 @@
 }
 
 .custom-img {
-  height: 200px;
-}
-
-@media (min-width: 768px) {
-  .custom-img {
-    height: 740px;
-  }
+  height: 220px;
 }
 
 .bord{
@@ -44,12 +38,6 @@
   gap: 20px;
 }
 
-@media (min-width: 768px) {
-  .custom-gap-md {
-    gap: 100px;
-  }
-}
-
 .logo{
   width: 80px;
 }
@@ -58,8 +46,27 @@
     gap: 5px;
   }
 
-@media (min-width : 768px) {
-  .logo{
+.nav-link{
+  font-size: large;
+}
+
+.nav-link:hover{
+  color: blue !important;
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .custom-img {
+    height: 660px;
+    margin-left: 100px;  
+  }
+  .hero-text{
+    padding-left: 80px;
+  }
+  .custom-gap-md {
+    gap: 100px;
+  }
+    .logo{
     width: 90px;
   }
   .logo-gap{

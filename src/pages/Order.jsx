@@ -47,56 +47,62 @@ const Order = () => {
                 No orders found.
               </p>
             ) : (
-              <div className="row g-4">
-                {products.map((product, index) => (
-                  <div key={index} className="col-12 col-md-10 mt-3 m-auto">
-                    <div className="card shadow-sm h-100">
-                      <div className="card-body d-flex flex-column">
-                        <h5 className="card-title fw-bold text-truncate">
-                          {product.product_title}
-                        </h5>
-                        <p className="text-muted mb-2">
-                          Quantity: {product.quantity}
-                        </p>
-                        <p className="text-muted">
-                          Date:{" "}
-                          {new Date(product.buying_time).toLocaleDateString()}
-                        </p>
-
-                        <div className="mt-auto d-flex justify-content-between align-items-center">
+              <div className="table-responsive border">
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Product</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col" className="">
+                        Date
+                      </th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {products.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.product_title}</td>
+                        <td>{item.quantity}</td>
+                        <td className="">
+                          {new Date(item.buying_time).toLocaleDateString()}
+                        </td>
+                        <td>
                           <span
                             className={`badge px-3 py-2 ${
-                              product.status === "COMPLETE"
+                              item.status === "COMPLETE"
                                 ? "bg-success"
-                                : product.status === "FAILED"
+                                : item.status === "FAILED"
                                 ? "bg-danger"
                                 : "bg-warning text-dark"
                             }`}
                           >
-                            {product.status}
+                            {item.status}
                           </span>
-
-                          <div className="d-flex gap-2">
+                        </td>
+                        <td>
+                          <div className="d-flex flex-wrap gap-2">
                             <NavLink
                               className="btn btn-light btn-sm"
-                              to={`/order_deatils/${product.id}`}
+                              to={`/order_deatils/${item.id}`}
                             >
                               <FaInfoCircle className="me-1" />
                               Details
                             </NavLink>
                             <NavLink
                               className="btn btn-dark btn-sm"
-                              to={`/reviews/${product.product}`}
+                              to={`/reviews/${item.product}`}
                             >
                               <FaStar className="me-1" />
                               Review
                             </NavLink>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             )}
           </div>

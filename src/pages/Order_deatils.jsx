@@ -160,10 +160,10 @@ const OrderDetails = () => {
           </div>
 
           <div className="text-center">
-            <NavLink className="btn btn-secondary me-2" to="/orders">
+            <NavLink className="btn btn-outline-primary me-2" to="/orders">
               Back to Orders
             </NavLink>
-            <NavLink className="btn btn-dark" to={`/reviews/${info.id}`}>
+            <NavLink className="btn btn-primary" to={`/reviews/${info.id}`}>
               Leave a Review
             </NavLink>
           </div>

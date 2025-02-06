@@ -8,10 +8,29 @@ import "react-toastify/dist/ReactToastify.css";
 const ProductInfo = () => {
   const id = useParams().id;
   const [product, setProduct] = useState([]);
+  const [allProduct, setAllProduct] = useState([]);
   const [comments, setComment] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [relatedLoading, SetrelatedLoading] = useState(true);
   const user_id = localStorage.getItem("user_id");
   let authecat = user_id ? true : false;
+
+
+  const RandomArray = (array) => {
+    return [...array].sort(() => Math.random() - 0.5);
+  };
+
+    useEffect(() => {
+      fetch("https://snapbuy-backend.onrender.com/product/list/")
+        .then((res) => res.json())
+        .then((data) => {
+          setAllProduct(RandomArray(data).slice(0, 3));
+          SetrelatedLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },[]);
 
   useEffect(() => {
     fetch(
@@ -31,6 +50,19 @@ const ProductInfo = () => {
         setLoading(false);
       });
   }, [id]);
+
+  const renderStars = (rating) => {
+      const fullStars = Math.floor(rating);
+      const hasHalfStar = rating % 1 >= 0.5;
+      const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+      return (
+        <span style={{ color: "#2a50ef", fontSize: "1.35rem" }}>
+          {"★".repeat(fullStars)}
+          {hasHalfStar ? "⯪" : ""}
+          {"☆".repeat(emptyStars)}
+        </span>
+      );
+    };
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -85,31 +117,109 @@ const ProductInfo = () => {
             <hr />
             <h2 className="pt-3">Customer Reviews</h2>
             {comments.length > 0 ? (
-              <div className="row">
-                {comments.map((comment) => (
-                  <div className="col-12 mb-4" key={comment.id}>
-                    <div className="card border-1 shadow-sm">
-                      <div className="card-body">
-                        <h5 className="card-title">{comment.name}</h5>
-                        <p className="card-text">
-                          <i className="fas fa-star text-warning me-2"></i>
-                          {comment.star} / 5
-                        </p>
-                        <p className="card-text">{comment.body}</p>
-                        <p className="text-muted small">
-                          <i className="far fa-clock me-1"></i>
-                          {new Date(comment.created_time).toLocaleString()}
-                        </p>
+              <div id="carouselExample" className="carousel slide">
+                <div className="carousel-inner">
+                  {comments.map((comment, index) => (
+                    <div
+                      className={`carousel-item ${index === 0 ? "active" : ""}`}
+                      key={comment.id}
+                    >
+                      <div
+                        className="card p-3 shadow-sm w-50 m-auto"
+                        style={{
+                          backgroundColor: "#f2f2f2",
+                          borderRadius: "10px",
+                        }}
+                      >
+                        <div className="d-flex justify-content-between align-items-center flex-wrap">
+                          <div>
+                            <strong>{comment.name}</strong>{" "}
+                            <span className="text-muted">
+                              -{" "}
+                              {new Date(comment.created_time).toLocaleString()}
+                            </span>
+                          </div>
+                          <div>{renderStars(comment.star)}</div>
+                        </div>
+                        <hr className="my-2" />
+                        <p className="text-start">{comment.body}</p>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <button
+                  className="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#carouselExample"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    className="carousel-control-prev-icon"
+                    style={{ filter: "invert(1)" }}
+                    aria-hidden="true"
+                  ></span>
+                  <span className="visually-hidden">Previous</span>
+                </button>
+                <button
+                  className="carousel-control-next"
+                  type="button"
+                  data-bs-target="#carouselExample"
+                  data-bs-slide="next"
+                >
+                  <span
+                    className="carousel-control-next-icon"
+                    style={{ filter: "invert(1)" }}
+                    aria-hidden="true"
+                  ></span>
+                  <span className="visually-hidden">Next</span>
+                </button>
               </div>
             ) : (
               <p className="text-muted">
                 No reviews available for this product.
               </p>
             )}
+
+            <div className="pt-5 text-center mt-5">
+              <h1>Related Products</h1>
+              <div className="d-flex flex-wrap justify-content-center gap-5 pt-3">
+              {relatedLoading ? (
+                <div className="text-center my-3">
+                  <div className="spinner-border text-dark" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              ) : ( allProduct.map((item) => (
+                  <div
+                    key={item.id}
+                    className="card col-md-3 col-12 text-center bord"
+                  >
+                    <img
+                      className="card-img-top p-3"
+                      src={item.img}
+                      alt={item.title}
+                      height={300}
+                    />
+                    <div className="card-body">
+                      <h4 className="card-title">
+                        {item.title.substring(0, 12)}...
+                      </h4>
+                      <div className="mb-2">
+                        {renderStars(parseFloat(item.get_rating))}
+                      </div>
+                      <span
+                        className="fw-bold"
+                        style={{ color: "#2a50ef", fontSize: "1.2rem" }}
+                      >
+                        <span className="fs-4">৳ </span> {item.price}
+                      </span>
+                    </div>
+                  </div>
+                )))}
+              </div>
+            </div>
+
+            
           </div>
         </div>
       )}
