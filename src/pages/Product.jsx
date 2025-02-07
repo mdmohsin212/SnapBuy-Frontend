@@ -172,7 +172,7 @@ const Product = () => {
                   <div
                     key={product.id}
                     className="col-lg-4 col-md-6 col-sm-12 mb-4"
-                    onClick={() => navigate(`/product_details/${product.id}`)}
+                    onClick={() => navigate(`/product_details/${product.id}/${product.category_name}`)}
                   >
                     <div className="card text-center h-100 bord">
                       <img

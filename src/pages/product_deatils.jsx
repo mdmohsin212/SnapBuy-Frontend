@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import { CartHandel } from "../components/app";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ProductInfo = () => {
-  const id = useParams().id;
+  const { id, category } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState([]);
   const [allProduct, setAllProduct] = useState([]);
   const [comments, setComment] = useState([]);
@@ -15,16 +16,12 @@ const ProductInfo = () => {
   const user_id = localStorage.getItem("user_id");
   let authecat = user_id ? true : false;
 
-
-  const RandomArray = (array) => {
-    return [...array].sort(() => Math.random() - 0.5);
-  };
-
-    useEffect(() => {
-      fetch("https://snapbuy-backend.onrender.com/product/list/")
+  useEffect(() => {
+      fetch(`https://snapbuy-backend.onrender.com/product/list/?category=${category}`)
         .then((res) => res.json())
         .then((data) => {
-          setAllProduct(RandomArray(data).slice(0, 3));
+          setAllProduct(data.slice(0,3));
+          console.log(data);
           SetrelatedLoading(false);
         })
         .catch((error) => {
@@ -183,43 +180,49 @@ const ProductInfo = () => {
             <div className="pt-5 text-center mt-5">
               <h1>Related Products</h1>
               <div className="d-flex flex-wrap justify-content-center gap-5 pt-3">
-              {relatedLoading ? (
-                <div className="text-center my-3">
-                  <div className="spinner-border text-dark" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </div>
-                </div>
-              ) : ( allProduct.map((item) => (
-                  <div
-                    key={item.id}
-                    className="card col-md-3 col-12 text-center bord"
-                  >
-                    <img
-                      className="card-img-top p-3"
-                      src={item.img}
-                      alt={item.title}
-                      height={300}
-                    />
-                    <div className="card-body">
-                      <h4 className="card-title">
-                        {item.title.substring(0, 12)}...
-                      </h4>
-                      <div className="mb-2">
-                        {renderStars(parseFloat(item.get_rating))}
-                      </div>
-                      <span
-                        className="fw-bold"
-                        style={{ color: "#2a50ef", fontSize: "1.2rem" }}
-                      >
-                        <span className="fs-4">৳ </span> {item.price}
-                      </span>
+                {relatedLoading ? (
+                  <div className="text-center my-3">
+                    <div className="spinner-border text-dark" role="status">
+                      <span className="visually-hidden">Loading...</span>
                     </div>
                   </div>
-                )))}
+                ) : (
+                  allProduct.map((item) => (
+                    <div
+                      key={item.id}
+                      className="card col-md-3 col-12 text-center bord"
+                      onClick={() =>{
+                        navigate(
+                          `/product_details/${item.id}/${item.category_name}`
+                        )
+                        window.location.reload();}
+                      }
+                    >
+                      <img
+                        className="card-img-top p-3"
+                        src={item.img}
+                        alt={item.title}
+                        height={300}
+                      />
+                      <div className="card-body">
+                        <h4 className="card-title">
+                          {item.title.substring(0, 12)}...
+                        </h4>
+                        <div className="mb-2">
+                          {renderStars(parseFloat(item.get_rating))}
+                        </div>
+                        <span
+                          className="fw-bold"
+                          style={{ color: "#2a50ef", fontSize: "1.2rem" }}
+                        >
+                          <span className="fs-4">৳ </span> {item.price}
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
-
-            
           </div>
         </div>
       )}
