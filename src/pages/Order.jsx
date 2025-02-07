@@ -17,6 +17,7 @@ const Order = () => {
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
+        console.log(data);
         setLoading(false);
       })
       .catch((error) => {
@@ -33,7 +34,7 @@ const Order = () => {
         </div>
 
         <div className="container-fluid mt-4 col-12 col-md-10 order-2 pb-5">
-          <div className="w-100 w-md-75 m-auto p-3">
+          <div className="w-100 w-md-75 m-auto">
             <h1 className="text-center mb-4">Order History</h1>
             {loading ? (
               <div className="d-flex justify-content-center py-5">
@@ -53,9 +54,6 @@ const Order = () => {
                     <tr>
                       <th scope="col">Product</th>
                       <th scope="col">Quantity</th>
-                      <th scope="col" className="">
-                        Date
-                      </th>
                       <th scope="col">Status</th>
                       <th scope="col">Actions</th>
                     </tr>
@@ -63,11 +61,8 @@ const Order = () => {
                   <tbody>
                     {products.map((item, index) => (
                       <tr key={index}>
-                        <td>{item.product_title}</td>
+                        <td>{item.product_name}</td>
                         <td>{item.quantity}</td>
-                        <td className="">
-                          {new Date(item.buying_time).toLocaleDateString()}
-                        </td>
                         <td>
                           <span
                             className={`badge px-3 py-2 ${

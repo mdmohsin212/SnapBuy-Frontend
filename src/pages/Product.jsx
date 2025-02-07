@@ -37,7 +37,7 @@ const Product = () => {
       setFilter(
         location.pathname === "/" ? filteredItems.slice(0, 9) : filteredItems
       );
-    } 
+    }
   };
 
   const renderStars = (rating) => {
@@ -56,93 +56,165 @@ const Product = () => {
   return (
     <div className="d-flex flex-column min-vh-100">
       <ToastContainer position="top-center" />
-      <div className="buttons text-center py-4">
-        <button
-          className="btn btn-outline-dark btn-sm m-2"
-          onClick={() => ProductFilter("all")}
-        >
-          All
-        </button>
-        <button
-          className="btn btn-outline-dark btn-sm m-2"
-          onClick={() => ProductFilter("Men's Clothing")}
-        >
-          Men's Clothing
-        </button>
-        <button
-          className="btn btn-outline-dark btn-sm m-2"
-          onClick={() => ProductFilter("Women's Clothing")}
-        >
-          Women's Clothing
-        </button>
-        <button
-          className="btn btn-outline-dark btn-sm m-2"
-          onClick={() => ProductFilter("Jewelery")}
-        >
-          Jewelry
-        </button>
-        <button
-          className="btn btn-outline-dark btn-sm m-2"
-          onClick={() => ProductFilter("Electronics")}
-        >
-          Electronics
-        </button>
-      </div>
-
       <div className="container">
-        {loading ? (
-          <div className="d-flex justify-content-center py-5">
-            <div className="spinner-border text-dark" role="status">
-              <span className="visually-hidden">Loading...</span>
+        <div className="row">
+          {location.pathname === "/product" && (
+            <div className="col-md-2 card h-25 m-5 p-3 cusom-filter">
+              <h5 className="text-center">Filter by Category</h5>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="all"
+                  onChange={() => ProductFilter("all")}
+                />
+                <label className="form-check-label" htmlFor="all">
+                  All
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="mens"
+                  onChange={() => ProductFilter("Men's Clothing")}
+                />
+                <label className="form-check-label" htmlFor="mens">
+                  Men's Clothing
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="womens"
+                  onChange={() => ProductFilter("Women's Clothing")}
+                />
+                <label className="form-check-label" htmlFor="womens">
+                  Women's Clothing
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="jewelry"
+                  onChange={() => ProductFilter("Jewelery")}
+                />
+                <label className="form-check-label" htmlFor="jewelry">
+                  Jewelry
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="electronics"
+                  onChange={() => ProductFilter("Electronics")}
+                />
+                <label className="form-check-label" htmlFor="electronics">
+                  Electronics
+                </label>
+              </div>
             </div>
-          </div>
-        ) : filter.length > 0 ? (
-          <div className="row">
-            {filter.map((product) => (
-              <div
-                key={product.id}
-                className="col-lg-4 col-md-6 col-sm-12 mb-4"
-                onClick={() => navigate(`/product_details/${product.id}`)}
+          )}
+
+          {location.pathname === "/" && (
+            <div className="buttons text-center py-4">
+              <button
+                className="btn btn-outline-dark btn-sm m-2"
+                onClick={() => ProductFilter("all")}
               >
-                <div className="card text-center h-100 bord">
-                  <img
-                    className="card-img-top p-3"
-                    src={product.img}
-                    alt={product.title}
-                    height={300}
-                  />
-                  <div className="card-body">
-                    <h4 className="card-title">
-                      {product.title.substring(0, 12)}...
-                    </h4>
-                    <div className="mb-2">
-                      {renderStars(parseFloat(product.get_rating))}
-                    </div>
-                    <span
-                      className="fw-bold"
-                      style={{ color: "#2a50ef", fontSize: "1.2rem" }}
-                    >
-                      <span className="fs-4">৳ </span> {product.price}
-                    </span>
-                  </div>
+                All
+              </button>
+              <button
+                className="btn btn-outline-dark btn-sm m-2"
+                onClick={() => ProductFilter("Men's Clothing")}
+              >
+                Men's Clothing
+              </button>
+              <button
+                className="btn btn-outline-dark btn-sm m-2"
+                onClick={() => ProductFilter("Women's Clothing")}
+              >
+                Women's Clothing
+              </button>
+              <button
+                className="btn btn-outline-dark btn-sm m-2"
+                onClick={() => ProductFilter("Jewelery")}
+              >
+                Jewelry
+              </button>
+              <button
+                className="btn btn-outline-dark btn-sm m-2"
+                onClick={() => ProductFilter("Electronics")}
+              >
+                Electronics
+              </button>
+            </div>
+          )}
+          <div
+            className={
+              location.pathname === "/product"
+                ? "col-md-9 pt-5"
+                : "col-12 text-center py-4"
+            }
+          >
+            {loading ? (
+              <div className="d-flex justify-content-center py-5">
+                <div className="spinner-border text-dark" role="status">
+                  <span className="visually-hidden">Loading...</span>
                 </div>
               </div>
-            ))}
-            {location.pathname === "/" && (
-              <div className="mb-5 mt-0 text-center">
-                <NavLink
-                  className="btn-lg px-4 text-decoration-none rounded-pill shadow p-1 text-white"
-                  to="/product"
-                  style={{ backgroundColor: "#2a50ef" }}
-                >
-                  See More
-                </NavLink>
+            ) : filter.length > 0 ? (
+              <div className="row">
+                {filter.map((product) => (
+                  <div
+                    key={product.id}
+                    className="col-lg-4 col-md-6 col-sm-12 mb-4"
+                    onClick={() => navigate(`/product_details/${product.id}`)}
+                  >
+                    <div className="card text-center h-100 bord">
+                      <img
+                        className="card-img-top p-3"
+                        src={product.img}
+                        alt={product.title}
+                        height={300}
+                      />
+                      <div className="card-body">
+                        <h4 className="card-title">
+                          {product.title.substring(0, 12)}...
+                        </h4>
+                        <div className="mb-2">
+                          {renderStars(parseFloat(product.get_rating))}
+                        </div>
+                        <span
+                          className="fw-bold"
+                          style={{ color: "#2a50ef", fontSize: "1.2rem" }}
+                        >
+                          <span className="fs-4">৳ </span> {product.price}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                {location.pathname === "/" && (
+                  <div className="mb-5 mt-0 text-center">
+                    <NavLink
+                      className="btn-lg px-4 text-decoration-none rounded-pill shadow p-1 text-white"
+                      to="/product"
+                      style={{ backgroundColor: "#2a50ef" }}
+                    >
+                      See More
+                    </NavLink>
+                  </div>
+                )}
               </div>
+            ) : (
+              <h3 className="text-center p-5 mt-5">No products found.</h3>
             )}
           </div>
-        ) : (
-          <h3 className="text-center p-5 mt-5">No products found.</h3>
-        )}
+        </div>
       </div>
       {location.pathname !== "/" && <Footer />}
     </div>

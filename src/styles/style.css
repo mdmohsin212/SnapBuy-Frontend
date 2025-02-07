@@ -55,6 +55,12 @@
   font-weight: 500;
 }
 
+.cusom-filter{
+  width: 220px;
+  margin-left: 65px !important;
+  margin-bottom: 5px !important;
+}
+
 @media (min-width: 768px) {
   .custom-img {
     height: 660px;
@@ -71,5 +77,8 @@
   }
   .logo-gap{
     gap: 50px;
+  }
+  .cusom-filter{
+    margin-left: -15px !important;
   }
 }

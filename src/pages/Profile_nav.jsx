@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { FaUser, FaClipboardList, FaLock } from "react-icons/fa"; // Icons
+import { FaUser, FaClipboardList, FaLock } from "react-icons/fa";
 import "../styles/style.css";
 
 class ProfileNav extends Component {
   render() {
     return (
       <div
-        className="profile-nav bg-light p-2 d-flex flex-column h-100"
-        style={{ width: "230px" }}
+        className="profile-nav p-2 d-flex flex-column h-100"
+        style={{ width: "230px", backgroundColor:"#f2f2f2" }}
       >
         <ul className="nav flex-column">
           <li className="nav-item">

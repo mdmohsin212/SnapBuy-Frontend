@@ -24,16 +24,16 @@ const Profile = () => {
     };
 
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div
+      className="d-flex flex-column min-vh-100"
+      style={{ backgroundColor: "#f7f7f7" }}
+    >
       <div className="d-flex flex-grow-1 flex-wrap flex-column flex-md-row">
         <div className="order-1 order-md-1 d-flex justify-content-center align-items-center text-center bg-light py-1">
           <ProfileNav />
         </div>
 
-        <div
-          className="container-fluid mt-4 col-12 col-md-10 order-2 order-md-2 pb-5 pt-md-2"
-          style={{ backgroundColor: "#f2f2f2" }}
-        >
+        <div className="container-fluid mt-4 col-12 col-md-10 order-2 order-md-2 pb-5 pt-md-2">
           <div className="container">
             <div className="main-body pt-3">
               <div className="row gutters-sm">
