@@ -9,7 +9,9 @@ const Cart = () => {
   const [loading, setLoading] = useState(true);
   const user_id = localStorage.getItem("user_id");
   useEffect(() => {
-    fetch(`https://snapbuy-backend.onrender.com/product/cart/?user_id=${user_id}`)
+    fetch(
+      `https://snap-buy-backend.vercel.app/product/cart/?user_id=${user_id}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setCartItems(data);
@@ -25,9 +27,9 @@ const Cart = () => {
     const newQuantity = item.quantity + value;
     if (newQuantity > 0) {
       const newItem = { ...item, quantity: newQuantity };
-      fetch(`https://snapbuy-backend.onrender.com/product/cart/${item.id}/`, {
+      fetch(`https://snap-buy-backend.vercel.app/product/cart/${item.id}/`, {
         method: "PUT",
-        headers: {"Content-Type": "application/json",},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newItem),
       })
         .then((res) => {
@@ -39,13 +41,11 @@ const Cart = () => {
         .catch((error) => console.error(error));
     }
     else {
-      fetch(`https://snapbuy-backend.onrender.com/product/cart/${item.id}/`, {
+      fetch(`https://snap-buy-backend.vercel.app/product/cart/${item.id}/`, {
         method: "DELETE",
       })
         .then((res) => {
-          setCartItems((Items) =>
-            Items.filter((i) => i.id !== item.id)
-          );
+          setCartItems((Items) => Items.filter((i) => i.id !== item.id));
         })
         .catch((error) => console.error(error));
     }

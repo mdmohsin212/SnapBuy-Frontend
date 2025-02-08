@@ -36,7 +36,7 @@ const Reviews = () => {
 
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch(`https://snapbuy-backend.onrender.com/product/list/${id}/`)
+    fetch(`hhttps://snap-buy-backend.vercel.app/product/list/${id}/`)
       .then((res) => res.json())
       .then((data) => setData(data));
   }, [id]);

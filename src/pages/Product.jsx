@@ -1,29 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Footer from "./Footer";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ProductContext } from './../context/ProductContext';
 
 const Product = () => {
-  const [allProduct, setProduct] = useState([]);
+  const { allProduct, loading } = useContext(ProductContext);
   const [filter, setFilter] = useState([]);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    fetch("https://snapbuy-backend.onrender.com/product/list/")
-      .then((res) => res.json())
-      .then((data) => {
-        setProduct(data);
-        setFilter(location.pathname === "/" ? data.slice(0, 9) : data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        console.error(error);
-      });
-  }, [location.pathname]);
+    setFilter(location.pathname === "/" ? allProduct.slice(0, 9) : allProduct);
+  }, [location.pathname, allProduct]);
 
   const ProductFilter = (category) => {
     if (category === "all") {
@@ -59,100 +49,50 @@ const Product = () => {
       <div className="container">
         <div className="row">
           {location.pathname === "/product" && (
-            <div className="col-md-2 card h-25 m-5 p-3 cusom-filter">
+            <div className="col-md-1 card h-25 m-5 p-3 cusom-filter">
               <h5 className="text-center">Filter by Category</h5>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="all"
-                  onChange={() => ProductFilter("all")}
-                />
-                <label className="form-check-label" htmlFor="all">
-                  All
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="mens"
-                  onChange={() => ProductFilter("Men's Clothing")}
-                />
-                <label className="form-check-label" htmlFor="mens">
-                  Men's Clothing
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="womens"
-                  onChange={() => ProductFilter("Women's Clothing")}
-                />
-                <label className="form-check-label" htmlFor="womens">
-                  Women's Clothing
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="jewelry"
-                  onChange={() => ProductFilter("Jewelery")}
-                />
-                <label className="form-check-label" htmlFor="jewelry">
-                  Jewelry
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="electronics"
-                  onChange={() => ProductFilter("Electronics")}
-                />
-                <label className="form-check-label" htmlFor="electronics">
-                  Electronics
-                </label>
-              </div>
+              {[
+                "all",
+                "Men's Clothing",
+                "Women's Clothing",
+                "Jewelery",
+                "Electronics",
+              ].map((category) => (
+                <div className="form-check" key={category}>
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id={category}
+                    onChange={() => ProductFilter(category)}
+                  />
+                  <label className="form-check-label" htmlFor={category}>
+                    {category}
+                  </label>
+                </div>
+              ))}
             </div>
           )}
 
           {location.pathname === "/" && (
             <div className="buttons text-center py-4">
-              <button
-                className="btn btn-outline-dark btn-sm m-2"
-                onClick={() => ProductFilter("all")}
-              >
-                All
-              </button>
-              <button
-                className="btn btn-outline-dark btn-sm m-2"
-                onClick={() => ProductFilter("Men's Clothing")}
-              >
-                Men's Clothing
-              </button>
-              <button
-                className="btn btn-outline-dark btn-sm m-2"
-                onClick={() => ProductFilter("Women's Clothing")}
-              >
-                Women's Clothing
-              </button>
-              <button
-                className="btn btn-outline-dark btn-sm m-2"
-                onClick={() => ProductFilter("Jewelery")}
-              >
-                Jewelry
-              </button>
-              <button
-                className="btn btn-outline-dark btn-sm m-2"
-                onClick={() => ProductFilter("Electronics")}
-              >
-                Electronics
-              </button>
+              {[
+                "all",
+                "Men's Clothing",
+                "Women's Clothing",
+                "Jewelery",
+                "Electronics",
+              ].map((category) => (
+                <button
+                  key={category}
+                  className="btn btn-outline-dark btn-sm m-2"
+                  onClick={() => ProductFilter(category)}
+                >
+                  {category}
+                </button>
+              ))}
             </div>
           )}
+
           <div
             className={
               location.pathname === "/product"
@@ -172,7 +112,11 @@ const Product = () => {
                   <div
                     key={product.id}
                     className="col-lg-4 col-md-6 col-sm-12 mb-4"
-                    onClick={() => navigate(`/product_details/${product.id}/${product.category_name}`)}
+                    onClick={() =>
+                      navigate(
+                        `/product_details/${product.id}/${product.category_name}`
+                      )
+                    }
                   >
                     <div className="card text-center h-100 bord">
                       <img

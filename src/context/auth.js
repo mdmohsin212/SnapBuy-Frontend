@@ -7,7 +7,7 @@ export const userLogin = (event) => {
   const password = getData("Password");
 
   if (username && password) {
-    fetch("https://snapbuy-backend.onrender.com/user/login/", {
+    fetch("https://snap-buy-backend.vercel.app/user/login/", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ username, password }),
@@ -59,7 +59,7 @@ export const UserRegistration = (event) => {
           password
         )
       ) {
-        fetch("https://snapbuy-backend.onrender.com/user/register/", {
+        fetch("https://snap-buy-backend.vercel.app/user/register/", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(info),
@@ -87,7 +87,7 @@ export const UserRegistration = (event) => {
 
 export const UserLogout = () => {
   const auth_token = localStorage.getItem("token");
-  fetch("https://snapbuy-backend.onrender.com/user/logout/", {
+  fetch("https://snap-buy-backend.vercel.app/user/logout/", {
     method: "POST",
     headers: {
       Authorization: `Token ${auth_token}`,

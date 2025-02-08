@@ -10,7 +10,7 @@ const OrderDetails = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`https://snapbuy-backend.onrender.com/payment/orderitem/${id}/`)
+    fetch(`https://snap-buy-backend.vercel.app/payment/orderitem/${id}/`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);

@@ -13,7 +13,7 @@ const Checkout = () => {
 
   useEffect(() => {
     fetch(
-      `https://snapbuy-backend.onrender.com/product/cart/?user_id=${user_id}`
+      `https://snap-buy-backend.vercel.app/product/cart/?user_id=${user_id}`
     )
       .then((res) => res.json())
       .then((data) => {

@@ -20,28 +20,34 @@ import ChangePassword from "./pages/Change_password";
 import Reviews from "./pages/Review";
 import OrderDeatils from "./pages/Order_deatils";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { ProductProvider } from './context/ProductContext';
 
 function App() {
   return (
     <>
-      <Nav />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/product" element={<Product />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/product_details/:id/:category" element={<ProductInfo />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/orders" element={<Order />} />
-        <Route path="/reviews/:id" element={<Reviews />} />
-        <Route path="/order_deatils/:id" element={<OrderDeatils />} />
-        <Route path="/make_payment" element={<MakePayment />} />
-        <Route path="/change_password" element={<ChangePassword />} />
-      </Routes>
+      <ProductProvider>
+        <Nav />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/product" element={<Product />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route
+            path="/product_details/:id/:category"
+            element={<ProductInfo />}
+          />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/orders" element={<Order />} />
+          <Route path="/reviews/:id" element={<Reviews />} />
+          <Route path="/order_deatils/:id" element={<OrderDeatils />} />
+          <Route path="/make_payment" element={<MakePayment />} />
+          <Route path="/change_password" element={<ChangePassword />} />
+        </Routes>
+      </ProductProvider>
     </>
   );
 }

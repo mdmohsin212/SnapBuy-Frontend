@@ -20,24 +20,22 @@ export const ContactHandel = (event) => {
     }
     else{
         if (name && email && message) {
-            fetch("https://snapbuy-backend.onrender.com/user/contact/", {
+            fetch("https://snap-buy-backend.vercel.app/user/contact/", {
               method: "POST",
               headers: { "content-type": "application/json" },
               body: JSON.stringify(data),
             })
-            .then((res) => {
+              .then((res) => {
                 if (res.ok) {
-                    toast.success(
-                      "Message sent. We'll get back to you shortly.");
+                  toast.success("Message sent. We'll get back to you shortly.");
+                } else {
+                  toast.error("Error occurred. Please try again.");
                 }
-                else{
-                    toast.error("Error occurred. Please try again.");
-                }
-            })
-            .catch((error) => {
-                console.log(error)
+              })
+              .catch((error) => {
+                console.log(error);
                 toast.error("Failed to send. Check your connection.");
-            });
+              });
         }
         else{
             toast.error("All fields are required.");
@@ -57,19 +55,19 @@ export const CartHandel = (event, id) => {
     };
     
     if (user_id) {
-        fetch("https://snapbuy-backend.onrender.com/product/cart/", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(data),
-            })
-              .then((res) => {
-                if (res.ok) {
-                  toast.success("Added to cart.");
-                } else {
-                  toast.error("Failed to add to cart.");
-                }
-              })
-              .catch((error) => console.log(error));
+        fetch("https://snap-buy-backend.vercel.app/product/cart/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then((res) => {
+            if (res.ok) {
+              toast.success("Added to cart.");
+            } else {
+              toast.error("Failed to add to cart.");
+            }
+          })
+          .catch((error) => console.log(error));
     }
     else{
         window.location.href ='/login'
@@ -107,13 +105,13 @@ export const HandalCheckout = (event, total, cartItem) => {
         tran_id : uniqueTransaction(),
       };
 
-  fetch(`https://snapbuy-backend.onrender.com/payment/status/${user_id}/`)
+  fetch(`https://snap-buy-backend.vercel.app/payment/status/${user_id}/`)
     .then((res) => res.json())
     .then((data) => {
       if (data.status == "YES") {
         if (name && email && address && zip) {
           fetch(
-            `https://snapbuy-backend.onrender.com/payment/checkout/${data.id}/`,
+            `https://snap-buy-backend.vercel.app/payment/checkout${data.id}/`,
             {
               method: "PATCH",
               headers: { "content-type": "application/json" },
@@ -127,7 +125,7 @@ export const HandalCheckout = (event, total, cartItem) => {
         }
       } else {
         if (name && email && address && zip) {
-          fetch("https://snapbuy-backend.onrender.com/payment/checkout/", {
+          fetch("https://snap-buy-backend.vercel.app/payment/checkout/", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify(info),
@@ -157,7 +155,7 @@ export const PasswordChangeHandel = (event) => {
   };
 
   fetch(
-    `https://snapbuy-backend.onrender.com/user/change_password/${user_id}/`,
+    `https://snap-buy-backend.vercel.app/user/change_password/${user_id}/`,
     {
       method: "POST",
       headers: {
@@ -192,24 +190,23 @@ export const ReviewHandel = (event, product) => {
     product : product,
   }
   console.log(data);
-  fetch(`https://snapbuy-backend.onrender.com/product/review/`, {
+  fetch(`https://snap-buy-backend.vercel.app/product/review/`, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(data),
   })
-  .then((res) => {
-    if (res.ok) {
-      toast.success("Your review has been successfully submitted.");
-      setTimeout(() => {
-        window.location.href = "/orders";
-      }, 1500);
-    }
-    else{
-      toast.error("something error");
-    }
-    return res.json()
-  })
-  .then((data) => console.log(data))
+    .then((res) => {
+      if (res.ok) {
+        toast.success("Your review has been successfully submitted.");
+        setTimeout(() => {
+          window.location.href = "/orders";
+        }, 1500);
+      } else {
+        toast.error("something error");
+      }
+      return res.json();
+    })
+    .then((data) => console.log(data));
 }
 
 export const getData = (id) => {

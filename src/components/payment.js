@@ -1,7 +1,7 @@
 export const payment = () => {
   const user_id = localStorage.getItem("user_id");
   fetch(
-    `https://snapbuy-backend.onrender.com/payment/make_payment/${user_id}/`,
+    `https://snap-buy-backend.vercel.app/payment/make_payment/${user_id}/`,
     {
       method: "POST",
       headers: {

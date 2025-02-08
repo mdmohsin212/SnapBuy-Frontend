@@ -17,10 +17,12 @@ const ProductInfo = () => {
   let authecat = user_id ? true : false;
 
   useEffect(() => {
-      fetch(`https://snapbuy-backend.onrender.com/product/list/?category=${category}`)
+      fetch(
+        `https://snap-buy-backend.vercel.app/product/list/?category=${category}`
+      )
         .then((res) => res.json())
         .then((data) => {
-          setAllProduct(data.slice(0,3));
+          setAllProduct(data.slice(0, 3));
           console.log(data);
           SetrelatedLoading(false);
         })
@@ -31,7 +33,7 @@ const ProductInfo = () => {
 
   useEffect(() => {
     fetch(
-      `https://snapbuy-backend.onrender.com/product/review/?product_id=${id}`
+      `https://snap-buy-backend.vercel.app/product/review/?product_id=${id}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -40,7 +42,7 @@ const ProductInfo = () => {
   }, [id]);
 
   useEffect(() => {
-    fetch(`https://snapbuy-backend.onrender.com/product/list/${id}`)
+    fetch(`https://snap-buy-backend.vercel.app/product/list/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setProduct(data);

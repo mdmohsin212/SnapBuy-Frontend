@@ -8,14 +8,14 @@ const Profile = () => {
     const [isEditMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    fetch(`https://snapbuy-backend.onrender.com/user/profile/?id=${user_id}`)
+    fetch(`https://snap-buy-backend.vercel.app/user/profile/?id=${user_id}`)
       .then((res) => res.json())
       .then((data) => setInfo(data[0].user))
       .catch((error) => console.error(error));
   }, []);
 
     const handleInputChange = (e) => {
-      const { name, value } = e.target;
+      const { name, value } = e.target; 
       setInfo({ ...info, [name]: value });
     };
 
@@ -66,7 +66,6 @@ const Profile = () => {
                         </div>
                         <div className="col-sm-9">
                           <p
-                            className="text-secondary"
                             style={{
                               backgroundColor: "#f2f2f2",
                               padding: "10px",
@@ -85,7 +84,6 @@ const Profile = () => {
                         </div>
                         <div className="col-sm-9">
                           <p
-                            className="text-secondary"
                             style={{
                               backgroundColor: "#f2f2f2",
                               padding: "10px",
@@ -104,7 +102,6 @@ const Profile = () => {
                         </div>
                         <div className="col-sm-9">
                           <p
-                            className="text-secondary"
                             style={{
                               backgroundColor: "#f2f2f2",
                               padding: "10px",
@@ -123,7 +120,6 @@ const Profile = () => {
                         </div>
                         <div className="col-sm-9">
                           <p
-                            className="text-secondary"
                             style={{
                               backgroundColor: "#f2f2f2",
                               padding: "10px",
@@ -151,7 +147,6 @@ const Profile = () => {
                             />
                           ) : (
                             <p
-                              className="text-secondary"
                               style={{
                                 backgroundColor: "#f2f2f2",
                                 padding: "10px",
@@ -180,7 +175,6 @@ const Profile = () => {
                             />
                           ) : (
                             <p
-                              className="text-secondary"
                               style={{
                                 backgroundColor: "#f2f2f2",
                                 padding: "10px",
