@@ -36,9 +36,11 @@ const Reviews = () => {
 
   const [data, setData] = useState([]);
   useEffect(() => {
-    fetch(`hhttps://snap-buy-backend.vercel.app/product/list/${id}/`)
+    fetch(`https://snap-buy-backend.vercel.app/product/list/${id}/`)
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((data) => {
+        setData(data);
+      });
   }, [id]);
 
   return (
