@@ -11,11 +11,16 @@ import { UserLogout } from "../context/auth";
 
 const Nav = () => {
   let isAuthenticated = false;
+  let isAdmin = false;
   const userData = localStorage.getItem("token");
   const userid = localStorage.getItem("user_id");
 
   if (userData && userid) {
     isAuthenticated = true;
+  }
+
+  if (userid == 1) {
+    isAdmin = true;
   }
 
   return (
@@ -60,7 +65,7 @@ const Nav = () => {
               </li>
             </ul>
             <div className="text-center">
-              {isAuthenticated ? (
+              {isAdmin ? (
                 <div className="d-flex align-items-center gap-3 justify-content-center justify-content-sm-start">
                   <div className="nav-item dropdown">
                     <NavLink
@@ -75,7 +80,61 @@ const Nav = () => {
                     </NavLink>
                     Account
                     <ul
-                      className="dropdown-menu"
+                      className="dropdown-menu dropdown-menu-end"
+                      aria-labelledby="accountDropdown"
+                    >
+                      <li>
+                        <NavLink className="dropdown-item" to="/profile">
+                          <FontAwesomeIcon icon={faUser} className="me-2" />
+                          Profile
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink className="dropdown-item" to="/running_order">
+                          <FontAwesomeIcon
+                            icon={faCartShopping}
+                            className="me-2"
+                          />
+                          See Orders
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          className="dropdown-item"
+                          to="/signup"
+                          onClick={() => UserLogout()}
+                        >
+                          <FontAwesomeIcon
+                            icon={faRightToBracket}
+                            className="me-2"
+                          />
+                          Logout
+                        </NavLink>
+                      </li>
+                    </ul>
+                    <style>
+                      {`.dropdown-toggle::after {
+                      display: none;
+                      }`}
+                    </style>
+                  </div>
+                </div>
+              ) : isAuthenticated ? (
+                <div className="d-flex align-items-center gap-3 justify-content-center justify-content-sm-start">
+                  <div className="nav-item dropdown">
+                    <NavLink
+                      className="nav-link dropdown-toggle"
+                      to="#"
+                      id="accountDropdown"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <FontAwesomeIcon icon={faUser} className="me-2" />
+                    </NavLink>
+                    Account
+                    <ul
+                      className="dropdown-menu dropdown-menu-end"
                       aria-labelledby="accountDropdown"
                     >
                       <li>
@@ -108,11 +167,9 @@ const Nav = () => {
                       </li>
                     </ul>
                     <style>
-                      {`
-                  .dropdown-toggle::after {
-                    display: none;
-                  }
-                `}
+                      {`.dropdown-toggle::after {
+                      display: none;
+                      }`}
                     </style>
                   </div>
                   <div>
@@ -135,7 +192,7 @@ const Nav = () => {
                   <NavLink to="/signup" className="btn btn-outline-dark m-2">
                     <FontAwesomeIcon icon={faUserPlus} /> Register
                   </NavLink>
-                </> 
+                </>
               )}
             </div>
           </div>

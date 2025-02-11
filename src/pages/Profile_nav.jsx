@@ -1,41 +1,119 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { FaUser, FaClipboardList, FaLock } from "react-icons/fa";
+import {
+  FaUser,
+  FaClipboardList,
+  FaLock,
+  FaShippingFast,
+  FaClipboardCheck,
+} from "react-icons/fa";
 import "../styles/style.css";
 
 class ProfileNav extends Component {
   render() {
+      let isAdmin = false;
+      const userid = localStorage.getItem("user_id");
+      if (userid == 1) {
+          isAdmin = true;
+        }
     return (
       <div
-        className="profile-nav p-2 d-flex flex-column h-100"
-        style={{ width: "230px", backgroundColor:"#f2f2f2" }}
+        className="profile-nav d-flex flex-column h-100"
+        style={{ backgroundColor: "#f2f2f2" }}
       >
-        <ul className="nav flex-column">
+        <ul
+          className="nav flex-column text-start p-2"
+          style={{
+            width: "240px",
+          }}
+        >
           <li className="nav-item">
             <NavLink
-              className="profile-nav-link nav-link text-dark px-3 py-2 rounded d-flex align-items-center"
+              className={({ isActive }) =>
+                isActive ? "nav-link-item active-link-item" : "nav-link-item"
+              }
               to="/profile"
             >
               <FaUser className="me-2" /> Account
             </NavLink>
           </li>
-          <li className="nav-item">
-            <NavLink
-              className="profile-nav-link nav-link text-dark px-3 py-2 rounded d-flex align-items-center"
-              to="/orders"
-            >
-              <FaClipboardList className="me-2" /> Order History
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink
-              className="profile-nav-link nav-link text-dark px-3 py-2 rounded d-flex align-items-center"
-              to="/change_password"
-            >
-              <FaLock className="me-2" /> Change Password
-            </NavLink>
-          </li>
+          {isAdmin ? (
+            <div>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link-item active-link-item"
+                      : "nav-link-item"
+                  }
+                  to="/running_order"
+                >
+                  <FaShippingFast className="me-2" /> Running Order
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link-item active-link-item"
+                      : "nav-link-item"
+                  }
+                  to="/complete_order"
+                >
+                  <FaClipboardCheck className="me-2" /> Complete Order
+                </NavLink>
+              </li>
+            </div>
+          ) : (
+            <div>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link-item active-link-item"
+                      : "nav-link-item"
+                  }
+                  to="/orders"
+                >
+                  <FaClipboardList className="me-2" /> Order History
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link-item active-link-item"
+                      : "nav-link-item"
+                  }
+                  to="/change_password"
+                >
+                  <FaLock className="me-2" /> Change Password
+                </NavLink>
+              </li>
+            </div>
+          )}
         </ul>
+        <style>
+          {`
+        .profile-nav .nav-link-item {
+            color: black;
+            margin-bottom: 6px;
+            padding: 15px 20px;
+            font-size: 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .profile-nav .nav-link-item:hover {
+            background-color: rgb(136, 201, 221);
+            color: black;
+        }
+        .active-link-item {
+            background-color: rgb(136, 201, 221) !important;
+        }
+         `}
+        </style>
       </div>
     );
   }

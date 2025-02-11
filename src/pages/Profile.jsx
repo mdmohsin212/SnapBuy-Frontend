@@ -28,8 +28,8 @@ const Profile = () => {
       className="d-flex flex-column min-vh-100"
       style={{ backgroundColor: "#f7f7f7" }}
     >
-      <div className="d-flex flex-grow-1 flex-wrap flex-column flex-md-row">
-        <div className="order-1 order-md-1 d-flex justify-content-center align-items-center text-center bg-light py-1">
+      <div className="d-flex flex-grow-1 flex-wrap flex-column flex-md-row p-0 m-0">
+        <div className="order-1 order-md-1 d-flex justify-content-center align-items-center text-start bg-light py-1">
           <ProfileNav />
         </div>
 

@@ -48,7 +48,6 @@ const Product = () => {
       <ToastContainer position="top-center" />
       <div className="container">
         <div className="row">
-          {location.pathname === "/product" && (
             <div className="col-md-1 card h-25 m-5 p-3 cusom-filter">
               <h5 className="text-center">Filter by Category</h5>
               {[
@@ -71,34 +70,8 @@ const Product = () => {
                 </div>
               ))}
             </div>
-          )}
-
-          {location.pathname === "/" && (
-            <div className="buttons text-center py-4">
-              {[
-                "all",
-                "Men's Clothing",
-                "Women's Clothing",
-                "Jewelery",
-                "Electronics",
-              ].map((category) => (
-                <button
-                  key={category}
-                  className="btn btn-outline-dark btn-sm m-2"
-                  onClick={() => ProductFilter(category)}
-                >
-                  {category}
-                </button>
-              ))}
-            </div>
-          )}
-
           <div
-            className={
-              location.pathname === "/product"
-                ? "col-md-9 pt-5"
-                : "col-12 text-center py-4"
-            }
+            className={"col-md-9 text-center py-4"}
           >
             {loading ? (
               <div className="d-flex justify-content-center py-5">

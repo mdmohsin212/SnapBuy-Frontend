@@ -27,6 +27,32 @@ export const userLogin = (event) => {
   }
 };
 
+export const AdminLoginHandle = (event) => {
+  event.preventDefault();
+  const username = getData("admin-username");
+  const password = getData("admin-password");
+
+  if (username && password) {
+    fetch("https://snap-buy-backend.vercel.app/user/admin/login/", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ username, password }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.token && data.user_id) {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user_id", data.user_id);
+          window.location.href = "/";
+        } else if (data.error) {
+          toast.error("Invalid Credential");
+        }
+      });
+  } else {
+    toast.error("Please fill in all required fields for Login");
+  }
+};
+
 export const UserRegistration = (event) => {
   event.preventDefault();
   const username = getData("username");

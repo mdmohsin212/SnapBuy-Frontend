@@ -21,6 +21,9 @@ import Reviews from "./pages/Review";
 import OrderDeatils from "./pages/Order_deatils";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { ProductProvider } from './context/ProductContext';
+import AdminLogin from './pages/admin_login';
+import CompleteOrder from './pages/Complete_order';
+import RunningOrder from './pages/Running_order';
 
 function App() {
   return (
@@ -35,12 +38,15 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/signup" element={<SignUp />} />
           <Route
             path="/product_details/:id/:category"
             element={<ProductInfo />}
           />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/complete_order" element={<CompleteOrder />} />
+          <Route path="/running_order" element={<RunningOrder />} />
           <Route path="/orders" element={<Order />} />
           <Route path="/reviews/:id" element={<Reviews />} />
           <Route path="/order_deatils/:id" element={<OrderDeatils />} />

@@ -11,6 +11,9 @@ export const ProductProvider = ({ children }) => {
 
   const user_id = localStorage.getItem("user_id");
 
+  const [OrderAllProduct, setOrderAllProduct] = useState([]);
+  const [Orderloading, setOrderLoading] = useState(true);
+
   useEffect(() => {
     if (allProduct.length === 0) {
       fetch("https://snap-buy-backend.vercel.app/product/list/")
@@ -44,9 +47,45 @@ export const ProductProvider = ({ children }) => {
     }
   }, [user_id]);
 
+  useEffect(() => {
+    fetch("https://snap-buy-backend.vercel.app/payment/orderitem/")
+      .then((res) => res.json())
+      .then((data) => {
+        setOrderAllProduct(
+          data?.filter(
+            (item) =>
+              item.status === "COMPLETE" && item.Shipping_status != "Complete"
+          )
+        );
+        setOrderLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setOrderLoading(false);
+      });
+  })
+
+  const [CompleteOrder, setCompleteOrder] = useState([]);
+  const [OrderCompleteloading, setOrderCompleteloading] = useState(true);
+
+  useEffect(() => {
+    fetch("https://snap-buy-backend.vercel.app/payment/orderitem/")
+      .then((res) => res.json())
+      .then((data) => {
+        setCompleteOrder(
+          data?.filter((item) => item.Shipping_status === "Complete")
+        );
+        setOrderCompleteloading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setOrderLoading(false);
+      });
+  })
+
   return (
     <ProductContext.Provider
-      value={{ allProduct, loading, cartItems, cartLoading, setCartItems }}
+      value={{ allProduct, loading, cartItems, cartLoading, setCartItems, OrderAllProduct, Orderloading, CompleteOrder, OrderCompleteloading }}
     >
       {children}
     </ProductContext.Provider>
