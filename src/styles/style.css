@@ -66,10 +66,9 @@
   background-image: url("../images/news_letter.jpg");
   background-size: cover;
   background-position: center;
-  padding-top: 250px;
-  padding-bottom: 200px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   color: white;
-  text-align: center;
 }
 
 
@@ -92,5 +91,15 @@
   }
   .cusom-filter{
     margin-left: -15px !important;
+  }
+  .news-letter {
+  position: relative;
+  background-image: url("../images/news_letter.jpg");
+  background-size: cover;
+  background-position: center;
+  padding-top: 250px;
+  padding-bottom: 200px;
+  color: white;
+  text-align: center;
   }
 }
