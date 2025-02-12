@@ -18,7 +18,7 @@ class ProfileNav extends Component {
         }
     return (
       <div
-        className="profile-nav d-flex flex-column h-100"
+        className="profile-nav d-flex flex-column h-100 w-100"
         style={{ backgroundColor: "#f2f2f2" }}
       >
         <ul
@@ -27,18 +27,20 @@ class ProfileNav extends Component {
             width: "240px",
           }}
         >
-          <li className="nav-item">
-            <NavLink
-              className={({ isActive }) =>
-                isActive ? "nav-link-item active-link-item" : "nav-link-item"
-              }
-              to="/profile"
-            >
-              <FaUser className="me-2" /> Account
-            </NavLink>
-          </li>
           {isAdmin ? (
             <div>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link-item active-link-item"
+                      : "nav-link-item"
+                  }
+                  to="/admin/profile"
+                >
+                  <FaUser className="me-2" /> Account
+                </NavLink>
+              </li>
               <li className="nav-item">
                 <NavLink
                   className={({ isActive }) =>
@@ -66,6 +68,18 @@ class ProfileNav extends Component {
             </div>
           ) : (
             <div>
+              <li className="nav-item">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link-item active-link-item"
+                      : "nav-link-item"
+                  }
+                  to="/profile"
+                >
+                  <FaUser className="me-2" /> Account
+                </NavLink>
+              </li>
               <li className="nav-item">
                 <NavLink
                   className={({ isActive }) =>

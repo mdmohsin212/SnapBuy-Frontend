@@ -61,6 +61,18 @@
   margin-bottom: 5px !important;
 }
 
+.news-letter {
+  position: relative;
+  background-image: url("../images/news.webp");
+  background-size: cover;
+  background-position: center;
+  padding-top: 200px;
+  padding-bottom: 200px;
+  color: white;
+  text-align: center;
+}
+
+
 @media (min-width: 768px) {
   .custom-img {
     height: 660px;

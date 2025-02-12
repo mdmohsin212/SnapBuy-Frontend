@@ -100,6 +100,36 @@ const Home = () => {
         </div>
       </div>
 
+      <div className="pb-3 px-1">
+        <div className="news-letter h-100 d-flex justify-content-evenly align-items-center flex-column flex-md-row text-center">
+          <div className="mb-4 text-start">
+            <p className="fw-medium">Sign up for the newsletter</p>
+            <h2>
+              Receive a 10% discount <br /> on your purchases
+            </h2>
+          </div>
+          <div className="w-50 bg-white p-4 rounded">
+            <h2 className="text-dark pb-1">Join our newsletter</h2>
+            <input
+              type="text"
+              className="form-control p-2 mb-3"
+              placeholder="Enter Name"
+            />
+            <input
+              type="text"
+              className="form-control p-2 mb-3"
+              placeholder="Enter Email"
+            />
+            <NavLink
+              className="btn btn-primary w-100"
+              onClick={() => window.location.reload()}
+            >
+              Subscribe
+            </NavLink>
+          </div>
+        </div>
+      </div>
+
       <div className="mt-4 p-1">
         <h2 className="text-center">
           Betheme offers a seamless <br /> shopping experience at any scale

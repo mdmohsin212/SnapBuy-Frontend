@@ -2,27 +2,7 @@ import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
 import ProfileNav from "./Profile_nav";
 
-const Profile = () => {
-  const user_id = localStorage.getItem("user_id");
-  const [info, setInfo] = useState({});
-    const [isEditMode, setEditMode] = useState(false);
-
-  useEffect(() => {
-    fetch(`https://snap-buy-backend.vercel.app/user/profile/?id=${user_id}`)
-      .then((res) => res.json())
-      .then((data) => setInfo(data[0].user))
-      .catch((error) => console.error(error));
-  }, []);
-
-    const handleInputChange = (e) => {
-      const { name, value } = e.target; 
-      setInfo({ ...info, [name]: value });
-    };
-
-    const EditMode = () => {
-      setEditMode(!isEditMode);
-    };
-
+const AdminProfile = () => {
   return (
     <div
       className="d-flex flex-column min-vh-100"
@@ -50,15 +30,20 @@ const Profile = () => {
                         </div>
                         <div className="mt-3">
                           <h4>
-                            {info.first_name} {info.last_name}
+                            MD MOHSIN
                           </h4>
+                        </div>
+                        <div className="mt-3">
+                          <h5>
+                            Admin
+                          </h5>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="col-md-8">
-                  <div className="card mb-3">
+                  <div className="card mb-3 p-2">
                     <div className="card-body">
                       <div className="row">
                         <div className="col-sm-3">
@@ -73,7 +58,7 @@ const Profile = () => {
                               margin: "0",
                             }}
                           >
-                            {info.username || "Username"}
+                            siam
                           </p>
                         </div>
                       </div>
@@ -91,7 +76,7 @@ const Profile = () => {
                               margin: "0",
                             }}
                           >
-                            {info.first_name || "First Name"}
+                            Md
                           </p>
                         </div>
                       </div>
@@ -109,7 +94,7 @@ const Profile = () => {
                               margin: "0",
                             }}
                           >
-                            {info.last_name || "Last Name"}
+                            Mohsin
                           </p>
                         </div>
                       </div>
@@ -127,75 +112,8 @@ const Profile = () => {
                               margin: "0",
                             }}
                           >
-                            {info.email || "example@domain.com"}
+                            siam.mohsin2005@gmail.com
                           </p>
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Phone</h6>
-                        </div>
-                        <div className="col-sm-9">
-                          {isEditMode ? (
-                            <input
-                              type="text"
-                              name="phone"
-                              value={info.phone || ""}
-                              onChange={handleInputChange}
-                              className="form-control"
-                            />
-                          ) : (
-                            <p
-                              style={{
-                                backgroundColor: "#f2f2f2",
-                                padding: "10px",
-                                borderRadius: "5px",
-                                margin: "0",
-                              }}
-                            >
-                              {info.phone || "empty"}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <h6 className="mb-0">Address</h6>
-                        </div>
-                        <div className="col-sm-9">
-                          {isEditMode ? (
-                            <input
-                              type="text"
-                              name="address"
-                              value={info.address || ""}
-                              onChange={handleInputChange}
-                              className="form-control"
-                            />
-                          ) : (
-                            <p
-                              style={{
-                                backgroundColor: "#f2f2f2",
-                                padding: "10px",
-                                borderRadius: "5px",
-                                margin: "0",
-                              }}
-                            >
-                              {info.address || "empty"}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="row">
-                        <div className="col-sm-12">
-                          <button
-                            className="btn btn-primary"
-                            onClick={EditMode}
-                          >
-                            {isEditMode ? "Save" : "Edit"}
-                          </button>
                         </div>
                       </div>
                     </div>
@@ -211,4 +129,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default AdminProfile;

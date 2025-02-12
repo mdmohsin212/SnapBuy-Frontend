@@ -83,9 +83,41 @@ export const ProductProvider = ({ children }) => {
       });
   })
 
+
+    const [products, setProducts] = useState([]);
+    const [Productloading, setProductLoading] = useState(true);
+
+    useEffect(() => {
+      setLoading(true);
+      fetch(
+        `https://snap-buy-backend.vercel.app/payment/orderitem/?user_id=${user_id}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          setProducts(data);
+          setProductLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          setProductLoading(false);
+        });
+    }, [user_id]);
+
   return (
     <ProductContext.Provider
-      value={{ allProduct, loading, cartItems, cartLoading, setCartItems, OrderAllProduct, Orderloading, CompleteOrder, OrderCompleteloading }}
+      value={{
+        allProduct,
+        loading,
+        cartItems,
+        cartLoading,
+        setCartItems,
+        OrderAllProduct,
+        Orderloading,
+        CompleteOrder,
+        OrderCompleteloading,
+        products,
+        Productloading
+     }}
     >
       {children}
     </ProductContext.Provider>

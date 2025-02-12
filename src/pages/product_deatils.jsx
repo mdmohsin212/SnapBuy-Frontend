@@ -94,21 +94,27 @@ const ProductInfo = () => {
                 {product.price}
               </h3>
               <p className="lead">{product.description}</p>
-              <button
-                className="btn btn-outline-dark"
-                onClick={(e) => CartHandel(e, product.id)}
-              >
-                Add to Cart
-              </button>
-              {authecat ? (
-                <Link to="/cart" className="btn btn-dark mx-3">
-                  Go to Cart
-                </Link>
-              ) : (
-                <Link to="/login" className="btn btn-dark mx-3">
-                  Go to Cart
-                </Link>
-              )}
+              <div>
+                {user_id !== '1' ? (
+                  <>
+                    <button
+                      className="btn btn-outline-dark"
+                      onClick={(e) => CartHandel(e, product.id)}
+                    >
+                      Add to Cart
+                    </button>
+                    {authecat ? (
+                      <Link to="/cart" className="btn btn-dark mx-3">
+                        Go to Cart
+                      </Link>
+                    ) : (
+                      <Link to="/login" className="btn btn-dark mx-3">
+                        Go to Cart
+                      </Link>
+                    )}
+                  </>
+                ) : null}
+              </div>
             </div>
           </div>
 
@@ -193,12 +199,12 @@ const ProductInfo = () => {
                     <div
                       key={item.id}
                       className="card col-md-3 col-12 text-center bord"
-                      onClick={() =>{
+                      onClick={() => {
                         navigate(
                           `/product_details/${item.id}/${item.category_name}`
-                        )
-                        window.location.reload();}
-                      }
+                        );
+                        window.location.reload();
+                      }}
                     >
                       <img
                         className="card-img-top p-3"

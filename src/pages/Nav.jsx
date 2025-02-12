@@ -84,7 +84,7 @@ const Nav = () => {
                       aria-labelledby="accountDropdown"
                     >
                       <li>
-                        <NavLink className="dropdown-item" to="/profile">
+                        <NavLink className="dropdown-item" to="/admin/profile">
                           <FontAwesomeIcon icon={faUser} className="me-2" />
                           Profile
                         </NavLink>
@@ -120,7 +120,18 @@ const Nav = () => {
                   </div>
                 </div>
               ) : isAuthenticated ? (
-                <div className="d-flex align-items-center gap-3 justify-content-center justify-content-sm-start">
+                <div className="d-flex align-items-center gap-4 justify-content-center justify-content-sm-start">
+                  <div>
+                    <NavLink to="/cart" className="nav-link">
+                      <FontAwesomeIcon icon={faCartShopping} />
+                    </NavLink>
+                    <NavLink
+                      to="/cart"
+                      className="text-decoration-none text-dark"
+                    >
+                      Cart
+                    </NavLink>
+                  </div>
                   <div className="nav-item dropdown">
                     <NavLink
                       className="nav-link dropdown-toggle"
@@ -171,17 +182,6 @@ const Nav = () => {
                       display: none;
                       }`}
                     </style>
-                  </div>
-                  <div>
-                    <NavLink to="/cart" className="nav-link">
-                      <FontAwesomeIcon icon={faCartShopping} />
-                    </NavLink>
-                    <NavLink
-                      to="/cart"
-                      className="text-decoration-none text-dark"
-                    >
-                      Cart
-                    </NavLink>
                   </div>
                 </div>
               ) : (
