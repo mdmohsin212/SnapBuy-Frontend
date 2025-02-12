@@ -34,6 +34,7 @@ const Order = () => {
                 <table className="table table-striped">
                   <thead>
                     <tr>
+                      <th scope="col">Id</th>
                       <th scope="col">Product</th>
                       <th scope="col">Quantity</th>
                       <th scope="col" className="d-none d-md-table-cell">
@@ -46,6 +47,7 @@ const Order = () => {
                   <tbody>
                     {products.map((item, index) => (
                       <tr key={index}>
+                        <td>{item.id}</td>
                         <td>{item.product_name}</td>
                         <td>{item.quantity}</td>
                         <td className="d-none d-md-table-cell">

@@ -6,7 +6,7 @@ import { ProductContext } from "./../context/ProductContext";
 
 const RunningOrder = () => {
   const { OrderAllProduct, Orderloading } = useContext(ProductContext);
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(null);
   const [shippingStatus, setStatus] = useState("");
 
   const handleStatusChange = (event) => {
@@ -14,8 +14,10 @@ const RunningOrder = () => {
   };
 
   const handleSaveChanges = () => {
+    if (!selectedOrder) return;
+
     fetch(
-      `https://snap-buy-backend.vercel.app/payment/orderitem/${selectedId}/`,
+      `https://snap-buy-backend.vercel.app/payment/orderitem/${selectedOrder.id}/`,
       {
         method: "PATCH",
         headers: {
@@ -63,6 +65,7 @@ const RunningOrder = () => {
                 <table className="table table-striped">
                   <thead>
                     <tr>
+                      <th scope="col">Id</th>
                       <th scope="col">Product</th>
                       <th scope="col" className="d-none d-md-table-cell">
                         Quantity
@@ -74,6 +77,7 @@ const RunningOrder = () => {
                   <tbody>
                     {OrderAllProduct.map((item, index) => (
                       <tr key={index}>
+                        <td>{item.id}</td>
                         <td>{item.product_name}</td>
                         <td className="d-none d-md-table-cell">
                           {item.quantity}
@@ -90,13 +94,13 @@ const RunningOrder = () => {
                           </span>
                         </td>
                         <td>
-                          {item.Shipping_status == "Pending" ? (
+                          {item.Shipping_status === "Pending" ? (
                             <button
                               type="button"
                               className="btn btn-dark btn-sm"
                               data-bs-toggle="modal"
                               data-bs-target="#exampleModal"
-                              onClick={() => setSelectedId(item.id)}
+                              onClick={() => setSelectedOrder(item)}
                             >
                               <FaTruck className="me-2" />
                               Shipment
@@ -117,7 +121,6 @@ const RunningOrder = () => {
         </div>
       </div>
 
-      {/* Modal */}
       <div
         className="modal fade"
         id="exampleModal"
@@ -139,6 +142,22 @@ const RunningOrder = () => {
               ></button>
             </div>
             <div className="modal-body pb-4">
+              {selectedOrder && (
+                <div>
+                  <p className="mb-2">
+                    Buyer Name : <strong>{selectedOrder.buyer_name}</strong>
+                  </p>
+                  <p className="mb-2">
+                    Buyer Email : <strong>{selectedOrder.email}</strong>
+                  </p>
+                  <p className="mb-2">
+                    Shipping Address : <strong>{selectedOrder.address}</strong>
+                  </p>
+                  <p className="mb-2">
+                    Product Name : <strong>{selectedOrder.product_name}</strong>
+                  </p>
+                </div>
+              )}
               <p className="form-label fw-bold mb-2">Shipping Status</p>
               <select className="form-select" onChange={handleStatusChange}>
                 <option value="Pending">Pending</option>

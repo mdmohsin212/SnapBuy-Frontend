@@ -109,23 +109,41 @@ class ProfileNav extends Component {
         </ul>
         <style>
           {`
-        .profile-nav .nav-link-item {
-            color: black;
-            margin-bottom: 6px;
-            padding: 15px 20px;
-            font-size: 18px;
-            border-radius: 8px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-        .profile-nav .nav-link-item:hover {
-            background-color: rgb(136, 201, 221);
-            color: black;
-        }
-        .active-link-item {
-            background-color: rgb(136, 201, 221) !important;
-        }
+          .profile-nav .nav-link-item {
+              color: black;
+              margin-bottom: 6px;
+              padding: 15px 20px;
+              font-size: 18px;
+              border-radius: 8px;
+              text-decoration: none;
+              display: flex;
+              align-items: center;
+            }
+          .profile-nav .nav-link-item:hover {
+              background-color: #0D6EFD;
+              color: black;
+            }
+          .active-link-item {
+              background-color: #0D6EFD !important;
+              color: white !important;
+            }
+          @media (max-width: 768px) {
+              .profile-nav {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+              }
+              .profile-nav .nav {
+                  width: 100%;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+              }
+              .profile-nav .nav-link-item {
+                  width: fit-content;
+                  text-align: center;
+              }
+            }
          `}
         </style>
       </div>

@@ -36,6 +36,7 @@ const CompleteOrder = () => {
                 <table className="table table-striped">
                   <thead>
                     <tr>
+                      <th scope="col">Id</th>
                       <th scope="col">Product</th>
                       <th scope="col">
                         Quantity
@@ -46,6 +47,7 @@ const CompleteOrder = () => {
                   <tbody>
                     {CompleteOrder.map((item, index) => (
                       <tr key={index}>
+                        <td>{item.id}</td>
                         <td>{item.product_name}</td>
                         <td>
                           {item.quantity}
