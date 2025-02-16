@@ -97,7 +97,7 @@ const RunningOrder = () => {
                           {item.Shipping_status === "Pending" ? (
                             <button
                               type="button"
-                              className="btn btn-dark btn-sm"
+                              className="btn btn-primary btn-sm"
                               data-bs-toggle="modal"
                               data-bs-target="#exampleModal"
                               onClick={() => setSelectedOrder(item)}
@@ -154,6 +154,12 @@ const RunningOrder = () => {
                     Shipping Address : <strong>{selectedOrder.address}</strong>
                   </p>
                   <p className="mb-2">
+                    Buying Time:{" "}
+                    <strong>
+                      {new Date(selectedOrder.buying_time).toLocaleString()}
+                    </strong>
+                  </p>
+                  <p className="mb-2">
                     Product Name : <strong>{selectedOrder.product_name}</strong>
                   </p>
                 </div>
@@ -174,7 +180,7 @@ const RunningOrder = () => {
               </button>
               <button
                 type="button"
-                className="btn btn-dark"
+                className="btn btn-primary"
                 onClick={handleSaveChanges}
                 data-bs-dismiss="modal"
               >
