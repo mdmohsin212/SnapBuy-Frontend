@@ -1,41 +1,58 @@
 import React, { useState, useEffect, useContext } from "react";
 import Footer from "./Footer";
-import { useNavigate, useLocation, NavLink } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ProductContext } from './../context/ProductContext';
+import { ProductContext } from "./../context/ProductContext";
 
 const Product = () => {
   const { allProduct, loading } = useContext(ProductContext);
   const [filter, setFilter] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const navigate = useNavigate();
   const location = useLocation();
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 12;
 
   useEffect(() => {
-    setFilter(location.pathname === "/" ? allProduct.slice(0, 9) : allProduct);
-  }, [location.pathname, allProduct]);
+    let filteredItems = allProduct;
 
-  const ProductFilter = (category) => {
-    if (category === "all") {
-      setFilter(
-        location.pathname === "/" ? allProduct.slice(0, 9) : allProduct
-      );
-    } else {
-      const filteredItems = allProduct.filter((item) =>
-        item.category_name.some((cat) => cat === category)
-      );
-      setFilter(
-        location.pathname === "/" ? filteredItems.slice(0, 9) : filteredItems
+    if (selectedCategory !== "all") {
+      filteredItems = filteredItems.filter((item) =>
+        item.category_name.some((cat) => cat === selectedCategory)
       );
     }
+
+    if (search) {
+      filteredItems = filteredItems.filter(
+        (product) =>
+          product.title.toLowerCase().includes(search.toLowerCase()) ||
+          product.price.toString().includes(search)
+      );
+    }
+    setFilter(filteredItems);
+    setCurrentPage(1);
+  }, [search, allProduct, selectedCategory]);
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
   };
+
+  const handlePageChange = (page) => setCurrentPage(page);
+
+  const LastItem = currentPage * itemsPerPage;
+  const FirstItem = LastItem - itemsPerPage;
+  const currentItems = filter.slice(FirstItem, LastItem);
+  const totalPages = Math.ceil(filter.length / itemsPerPage);
 
   const renderStars = (rating) => {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 >= 0.5;
     const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
     return (
-      <span style={{ color: "#2a50ef", fontSize: "1.35rem" }}>
+      <span style={{ color: "#fbc02d", fontSize: "1.60rem" }}>
         {"★".repeat(fullStars)}
         {hasHalfStar ? "⯪" : ""}
         {"☆".repeat(emptyStars)}
@@ -46,23 +63,39 @@ const Product = () => {
   return (
     <div className="d-flex flex-column min-vh-100">
       <ToastContainer position="top-center" />
-      <div className="container">
+      <div className="px-3 mt-5">
         <div className="row">
-            <div className="col-md-1 card h-25 m-5 p-3 cusom-filter">
+          <div className="col-lg-3 pt-0 mt-0 pt-md-5 mt-md-3">
+            <div className="mb-4 p-3 border rounded bg-light shadow-sm">
+              <h5 className="text-center text-dark">Search</h5>
+              <input
+                id="search-input"
+                className="form-control"
+                type="search"
+                placeholder="Search for products..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            <div className="mb-4 p-3 border rounded bg-light shadow-sm">
               <h5 className="text-center">Filter by Category</h5>
               {[
                 "all",
-                "Men's Clothing",
-                "Women's Clothing",
-                "Jewelery",
-                "Electronics",
+                "Mobile",
+                "Laptop",
+                "Monitor",
+                "Desktop",
+                "Camera",
+                "Gaming Console",
               ].map((category) => (
                 <div className="form-check" key={category}>
                   <input
                     className="form-check-input"
-                    type="checkbox"
+                    type="radio"
                     id={category}
-                    onChange={() => ProductFilter(category)}
+                    name="categoryFilter"
+                    checked={selectedCategory === category}
+                    onChange={() => handleCategoryChange(category)}
                   />
                   <label className="form-check-label" htmlFor={category}>
                     {category}
@@ -70,21 +103,32 @@ const Product = () => {
                 </div>
               ))}
             </div>
-          <div
-            className={"col-md-9 text-center py-4"}
-          >
-            {loading ? (
-              <div className="d-flex justify-content-center py-5">
-                <div className="spinner-border text-dark" role="status">
-                  <span className="visually-hidden">Loading...</span>
+          </div>
+
+          <div className="col-lg-9 col-md-8">
+            <div className="d-flex justify-content-between align-items-center mb-4">
+              <h2 className="text-center mb-0 fw-bold text-dark w-100">
+                Our Products
+              </h2>
+              <select id="sort-filter" className="form-select w-auto ms-auto">
+                <option value="">Sort By</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+              </select>
+            </div>
+
+            <div className="row">
+              {loading ? (
+                <div className="d-flex justify-content-center py-5">
+                  <div className="spinner-border text-dark" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                  </div>
                 </div>
-              </div>
-            ) : filter.length > 0 ? (
-              <div className="row">
-                {filter.map((product) => (
+              ) : currentItems.length > 0 ? (
+                currentItems.map((product) => (
                   <div
                     key={product.id}
-                    className="col-lg-4 col-md-6 col-sm-12 mb-4"
+                    className="col-lg-3 col-md-4 col-sm-6 mb-4"
                     onClick={() =>
                       navigate(
                         `/product_details/${product.id}/${product.category_name}`
@@ -99,36 +143,40 @@ const Product = () => {
                         height={300}
                       />
                       <div className="card-body">
-                        <h4 className="card-title">
-                          {product.title.substring(0, 12)}...
-                        </h4>
+                        <p className="card-title">{product.title}</p>
                         <div className="mb-2">
                           {renderStars(parseFloat(product.get_rating))}
                         </div>
                         <span
                           className="fw-bold"
-                          style={{ color: "#2a50ef", fontSize: "1.2rem" }}
+                          style={{ color: "#000000", fontSize: "1.2rem" }}
                         >
                           <span className="fs-4">৳ </span> {product.price}
                         </span>
                       </div>
                     </div>
                   </div>
+                ))
+              ) : (
+                <h3 className="text-center p-5 mt-5">No products found.</h3>
+              )}
+            </div>
+            {location.pathname !== "/" && (
+              <div className="text-center mt-4 my-3">
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handlePageChange(index + 1)}
+                    className={`btn mx-1 fs-5 ${
+                      currentPage === index + 1
+                        ? "btn-primary"
+                        : "btn-outline-primary"
+                    }`}
+                  >
+                    {index + 1}
+                  </button>
                 ))}
-                {location.pathname === "/" && (
-                  <div className="mb-5 mt-0 text-center">
-                    <NavLink
-                      className="btn-lg px-4 text-decoration-none rounded-pill shadow p-1 text-white"
-                      to="/product"
-                      style={{ backgroundColor: "#2a50ef" }}
-                    >
-                      See More
-                    </NavLink>
-                  </div>
-                )}
               </div>
-            ) : (
-              <h3 className="text-center p-5 mt-5">No products found.</h3>
             )}
           </div>
         </div>

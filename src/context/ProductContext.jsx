@@ -12,7 +12,13 @@ export const ProductProvider = ({ children }) => {
   const user_id = localStorage.getItem("user_id");
 
   const [OrderAllProduct, setOrderAllProduct] = useState([]);
+  const [CompleteOrder, setCompleteOrder] = useState([]);
+  
   const [Orderloading, setOrderLoading] = useState(true);
+  const [OrderCompleteloading, setOrderCompleteloading] = useState(true);
+
+  const [products, setProducts] = useState([]);
+  const [Productloading, setProductLoading] = useState(true);
 
   useEffect(() => {
     if (allProduct.length === 0) {
@@ -27,8 +33,7 @@ export const ProductProvider = ({ children }) => {
           setLoading(false);
         });
     }
-  }, [allProduct]);
-
+  }, []);
 
   useEffect(() => {
     if (user_id) {
@@ -47,60 +52,77 @@ export const ProductProvider = ({ children }) => {
     }
   }, [user_id]);
 
-  useEffect(() => {
-    fetch("https://snap-buy-backend.vercel.app/payment/orderitem/")
+// useEffect(() => {
+//   const controller = new AbortController();
+//   setOrderLoading(true);
+//   setOrderCompleteloading(true);
+
+//   fetch("https://snap-buy-backend.vercel.app/payment/orderitem/", {
+//     signal: controller.signal,
+//   })
+//     .then((res) => res.json())
+//     .then((data) => {
+//       setOrderAllProduct(
+//         data?.filter(
+//           (item) =>
+//             item.status === "COMPLETE" && item.Shipping_status !== "Complete"
+//         )
+//       );
+//       setCompleteOrder(
+//         data?.filter((item) => item.Shipping_status === "Complete")
+//       );
+//     })
+//     .catch((err) => {
+//       if (err.name !== "AbortError") console.error(err);
+//     })
+//     .finally(() => {
+//       setOrderLoading(false);
+//       setOrderCompleteloading(false);
+//     });
+
+//   return () => controller.abort();
+// }, []);
+
+
+useEffect(() => {
+  if (user_id && user_id != 1) {
+    const controller = new AbortController();
+    setProductLoading(true);
+
+    fetch(
+      `https://snap-buy-backend.vercel.app/payment/orderitem/?user_id=${user_id}`,
+      { signal: controller.signal }
+    )
       .then((res) => res.json())
       .then((data) => {
-        setOrderAllProduct(
-          data?.filter(
-            (item) =>
-              item.status === "COMPLETE" && item.Shipping_status != "Complete"
-          )
-        );
-        setOrderLoading(false);
+        setProducts(data);
       })
-      .catch((err) => {
-        console.error(err);
-        setOrderLoading(false);
-      });
-  })
-
-  const [CompleteOrder, setCompleteOrder] = useState([]);
-  const [OrderCompleteloading, setOrderCompleteloading] = useState(true);
-
-  useEffect(() => {
-    fetch("https://snap-buy-backend.vercel.app/payment/orderitem/")
-      .then((res) => res.json())
-      .then((data) => {
-        setCompleteOrder(
-          data?.filter((item) => item.Shipping_status === "Complete")
-        );
-        setOrderCompleteloading(false);
+      .catch((error) => {
+        if (error.name !== "AbortError") console.error(error);
       })
-      .catch((err) => {
-        console.error(err);
-        setOrderLoading(false);
+      .finally(() => {
+        setProductLoading(false);
       });
-  })
 
+    return () => controller.abort();
+  }
+}, [user_id]);
 
-    const [products, setProducts] = useState([]);
-    const [Productloading, setProductLoading] = useState(true);
+    const [info, setInfo] = useState({});
 
     useEffect(() => {
-      setLoading(true);
-      fetch(
-        `https://snap-buy-backend.vercel.app/payment/orderitem/?user_id=${user_id}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          setProducts(data);
-          setProductLoading(false);
-        })
-        .catch((error) => {
-          console.error(error);
-          setProductLoading(false);
-        });
+      if (user_id && user_id != 1) {
+        fetch(`https://snap-buy-backend.vercel.app/user/profile/?id=${user_id}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data && data[0] && data[0].user) {
+              setInfo(data[0].user);
+            } else {
+              console.error("User data not found");
+            }
+          })
+          .catch((error) => console.error("Error fetching user data:", error));
+      }
     }, [user_id]);
 
   return (
@@ -108,6 +130,7 @@ export const ProductProvider = ({ children }) => {
       value={{
         allProduct,
         loading,
+        info,
         cartItems,
         cartLoading,
         setCartItems,
@@ -116,8 +139,8 @@ export const ProductProvider = ({ children }) => {
         CompleteOrder,
         OrderCompleteloading,
         products,
-        Productloading
-     }}
+        Productloading,
+      }}
     >
       {children}
     </ProductContext.Provider>

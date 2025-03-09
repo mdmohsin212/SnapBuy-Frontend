@@ -1,27 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import React, {useContext} from "react";
+import { NavLink } from "react-router-dom";
 import Footer from "./Footer";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { ProductContext } from "./../context/ProductContext";
 
 const OrderDetails = () => {
-  const id = useParams().id;
-  const [info, setInfo] = useState({});
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch(`https://snap-buy-backend.vercel.app/payment/orderitem/${id}/`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setInfo(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching order details:", error);
-        setLoading(false);
-      });
-  }, [id]);
+  const { products, Productloading } = useContext(ProductContext);
+  console.log(products)
 
   // convert jsx to pdf
   const handleGeneratePDF = () => {
@@ -32,13 +19,13 @@ const OrderDetails = () => {
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`Order_${info.id}.pdf`);
+      pdf.save(`Order_${products.id}.pdf`);
     });
   };
 
   return (
     <div className="d-flex flex-column min-vh-100 bg-light">
-      {loading ? (
+      {Productloading ? (
         <div className="d-flex justify-content-center py-5">
           <div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Loading...</span>
@@ -54,14 +41,14 @@ const OrderDetails = () => {
             <div>
               <h2 className="h5 mb-3">Order Summary</h2>
               <p className="mb-1">
-                <strong>Order ID:</strong> {info.id}
+                <strong>Order ID:</strong> {products.id}
               </p>
               <p className="mb-1">
-                <strong>Transaction ID:</strong> {info.tran_id}
+                <strong>Transaction ID:</strong> {products.tran_id}
               </p>
               <p className="mb-1">
                 <strong>Order Date:</strong>{" "}
-                {new Date(info.buying_time).toLocaleDateString("en-US", {
+                {new Date(products.buying_time).toLocaleDateString("en-US", {
                   weekday: "long",
                   year: "numeric",
                   month: "long",
@@ -72,14 +59,14 @@ const OrderDetails = () => {
                 <strong>Delivery Status:</strong>{" "}
                 <span
                   className={`badge px-3 py-2 ${
-                    info.status === "COMPLETE"
+                    products.status === "COMPLETE"
                       ? "bg-success"
-                      : info.status === "PENDING"
+                      : products.status === "PENDING"
                       ? "bg-warning text-dark"
                       : "bg-danger"
                   }`}
                 >
-                  {info.status}
+                  {products.status}
                 </span>
               </p>
             </div>
@@ -95,20 +82,20 @@ const OrderDetails = () => {
           </div>
 
           <div className="mb-5">
-            <h2 className="h5 mb-3 text-secondary">Shipping Information</h2>
+            <h2 className="h5 mb-3 text-secondary">Shipping productsrmation</h2>
             <table className="table table-striped">
               <tbody>
                 <tr>
                   <th>Name</th>
-                  <td>{info.buyer_name}</td>
+                  <td>{products.buyer_name}</td>
                 </tr>
                 <tr>
                   <th>Email</th>
-                  <td>{info.email}</td>
+                  <td>{products.email}</td>
                 </tr>
                 <tr>
                   <th>Address</th>
-                  <td>{info.address}</td>
+                  <td>{products.address}</td>
                 </tr>
                 <tr>
                   <th>Courier Service</th>
@@ -123,7 +110,7 @@ const OrderDetails = () => {
           </div>
 
           <div className="mb-5">
-            <h2 className="h5 mb-3 text-secondary">Billing Information</h2>
+            <h2 className="h5 mb-3 text-secondary">Billing productsrmation</h2>
             <table className="table table-striped">
               <tbody>
                 <tr>
@@ -135,14 +122,14 @@ const OrderDetails = () => {
                   <td>
                     <span
                       className={`badge px-3 py-2 ${
-                        info.status === "COMPLETE"
+                        products.status === "COMPLETE"
                           ? "bg-success"
-                          : info.status === "PENDING"
+                          : products.status === "PENDING"
                           ? "bg-warning text-dark"
                           : "bg-danger"
                       }`}
                     >
-                      {info.status}
+                      {products.status}
                     </span>
                   </td>
                 </tr>
@@ -151,7 +138,7 @@ const OrderDetails = () => {
                   <td>
                     <strong>
                       <span className="fs-4">৳ </span>
-                      {info.price}
+                      {products.price}
                     </strong>
                   </td>
                 </tr>
@@ -163,7 +150,7 @@ const OrderDetails = () => {
             <NavLink className="btn btn-outline-primary me-2" to="/orders">
               Back to Orders
             </NavLink>
-            <NavLink className="btn btn-primary" to={`/reviews/${info.id}`}>
+            <NavLink className="btn btn-primary" to={`/reviews/${products.id}`}>
               Leave a Review
             </NavLink>
           </div>

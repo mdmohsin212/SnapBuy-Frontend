@@ -1,25 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import Footer from "./Footer";
 import ProfileNav from "./Profile_nav";
+import { ProductContext } from './../context/ProductContext';
 
 const Profile = () => {
-  const user_id = localStorage.getItem("user_id");
-  const [info, setInfo] = useState({});
-    const [isEditMode, setEditMode] = useState(false);
+  const [isEditMode, setEditMode] = useState(false);
+  const {info} = useContext(ProductContext);
 
-  useEffect(() => {
-    fetch(`https://snap-buy-backend.vercel.app/user/profile/?id=${user_id}`)
-      .then((res) => res.json())
-      .then((data) => setInfo(data[0].user))
-      .catch((error) => console.error(error));
-  }, []);
-
-    const handleInputChange = (e) => {
+  const handleInputChange = (e) => {
       const { name, value } = e.target; 
       setInfo({ ...info, [name]: value });
     };
 
-    const EditMode = () => {
+  const EditMode = () => {
       setEditMode(!isEditMode);
     };
 

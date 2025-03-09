@@ -14,8 +14,9 @@ export const userLogin = (event) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.token && data.user_id) {
-          localStorage.setItem("token", data.token);
+        if (data.access && data.user_id) {
+          localStorage.setItem("token", data.access);
+          localStorage.setItem("refresh", data.refresh);
           localStorage.setItem("user_id", data.user_id);
           window.location.href = "/";
         } else if (data.error) {
@@ -40,9 +41,10 @@ export const AdminLoginHandle = (event) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.token && data.user_id) {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("user_id", data.user_id);
+        if (data.access && data.user_id) {
+            localStorage.setItem("token", data.access);
+            localStorage.setItem("refresh", data.refresh);
+            localStorage.setItem("user_id", data.user_id);
           window.location.href = "/";
         } else if (data.error) {
           toast.error("Invalid Credential");

@@ -23,7 +23,6 @@ const ProductInfo = () => {
         .then((res) => res.json())
         .then((data) => {
           setAllProduct(data.slice(0, 3));
-          console.log(data);
           SetrelatedLoading(false);
         })
         .catch((error) => {

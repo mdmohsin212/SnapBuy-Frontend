@@ -20,6 +20,7 @@ const AdminLogin = () => {
                   type="text"
                   className="form-control"
                   id="admin-username"
+                  value={"siam"}
                   placeholder="Username"
                 />
               </div>
@@ -29,6 +30,7 @@ const AdminLogin = () => {
                   type="password"
                   className="form-control"
                   id="admin-password"
+                  value={"123"}
                   placeholder="Password"
                 />
               </div>

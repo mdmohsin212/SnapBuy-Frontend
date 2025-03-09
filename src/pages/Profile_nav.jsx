@@ -36,9 +36,9 @@ class ProfileNav extends Component {
                       ? "nav-link-item active-link-item"
                       : "nav-link-item"
                   }
-                  to="/admin/profile"
+                  to="/overview"
                 >
-                  <FaUser className="me-2" /> Account
+                  <FaUser className="me-2" /> Overview
                 </NavLink>
               </li>
               <li className="nav-item">

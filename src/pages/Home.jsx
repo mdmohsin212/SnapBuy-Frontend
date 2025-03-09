@@ -65,7 +65,6 @@ const Home = () => {
         </div>
       </div>
 
-      <h1 className="text-center p-2 pb-0 fw-light">Latest Products</h1>
       <Product />
 
       <div className="text-center mt-3 p-5">

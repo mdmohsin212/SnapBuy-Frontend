@@ -111,7 +111,7 @@ export const HandalCheckout = (event, total, cartItem) => {
       if (data.status == "YES") {
         if (name && email && address && zip) {
           fetch(
-            `https://snap-buy-backend.vercel.app/payment/checkout${data.id}/`,
+            `https://snap-buy-backend.vercel.app/payment/checkout/${data.id}/`,
             {
               method: "PATCH",
               headers: { "content-type": "application/json" },
