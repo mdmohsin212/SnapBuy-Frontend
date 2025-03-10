@@ -1,14 +1,25 @@
-import React, {useContext} from "react";
+import React, {useEffect, useState} from "react";
 import { NavLink } from "react-router-dom";
 import Footer from "./Footer";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import { ProductContext } from "./../context/ProductContext";
+import { useParams } from "react-router-dom";
 
 const OrderDetails = () => {
 
-  const { products, Productloading } = useContext(ProductContext);
-  console.log(products)
+  const [ products, setProduct ] = useState([]);
+  const [ Productloading, setProductloading ] = useState(true);
+  const { id } = useParams();
+
+  useEffect(() =>{
+    fetch(`https://snap-buy-backend.vercel.app/payment/orderitem/${id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setProduct(data);
+      setProductloading(false);
+    })
+    .catch((err) => console.error(err))
+  }, [])
 
   // convert jsx to pdf
   const handleGeneratePDF = () => {

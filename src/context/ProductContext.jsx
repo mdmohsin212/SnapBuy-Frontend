@@ -36,7 +36,7 @@ export const ProductProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (user_id) {
+    if (user_id && user_id != 1) {
       fetch(
         `https://snap-buy-backend.vercel.app/product/cart/?user_id=${user_id}`
       )
@@ -52,36 +52,39 @@ export const ProductProvider = ({ children }) => {
     }
   }, [user_id]);
 
-// useEffect(() => {
-//   const controller = new AbortController();
-//   setOrderLoading(true);
-//   setOrderCompleteloading(true);
+useEffect(() => {
+  const controller = new AbortController();
+  setOrderLoading(true);
+  setOrderCompleteloading(true);
 
-//   fetch("https://snap-buy-backend.vercel.app/payment/orderitem/", {
-//     signal: controller.signal,
-//   })
-//     .then((res) => res.json())
-//     .then((data) => {
-//       setOrderAllProduct(
-//         data?.filter(
-//           (item) =>
-//             item.status === "COMPLETE" && item.Shipping_status !== "Complete"
-//         )
-//       );
-//       setCompleteOrder(
-//         data?.filter((item) => item.Shipping_status === "Complete")
-//       );
-//     })
-//     .catch((err) => {
-//       if (err.name !== "AbortError") console.error(err);
-//     })
-//     .finally(() => {
-//       setOrderLoading(false);
-//       setOrderCompleteloading(false);
-//     });
+  if (user_id) {
+      fetch("https://snap-buy-backend.vercel.app/payment/orderitem/", {
+        signal: controller.signal,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setOrderAllProduct(
+            data?.filter(
+              (item) =>
+                item.status === "COMPLETE" &&
+                item.Shipping_status !== "Complete"
+            )
+          );
+          setCompleteOrder(
+            data?.filter((item) => item.Shipping_status === "Complete")
+          );
+        })
+        .catch((err) => {
+          if (err.name !== "AbortError") console.error(err);
+        })
+        .finally(() => {
+          setOrderLoading(false);
+          setOrderCompleteloading(false);
+        });
+  }
 
-//   return () => controller.abort();
-// }, []);
+  return () => controller.abort();
+}, [user_id]);
 
 
 useEffect(() => {

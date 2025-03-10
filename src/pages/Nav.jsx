@@ -84,9 +84,9 @@ const Nav = () => {
                       aria-labelledby="accountDropdown"
                     >
                       <li>
-                        <NavLink className="dropdown-item" to="/admin/profile">
+                        <NavLink className="dropdown-item" to="/overview">
                           <FontAwesomeIcon icon={faUser} className="me-2" />
-                          Profile
+                          OverView
                         </NavLink>
                       </li>
                       <li>
